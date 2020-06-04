@@ -11,10 +11,6 @@ input {
     max-width: 850px;
 }
 
-/*
-    Theme: myTheme1
-  */
-
 .simple-keyboard.dark {
     background-color: rgba(0, 0, 0, 0.8);
     border-radius: 0;
@@ -31,7 +27,8 @@ input {
     color: white;
 }
 
-.simple-keyboard.dark .hg-button:active {
+.simple-keyboard.dark .hg-button:active,
+.simple-keyboard.dark .hg-activeButton {
     background: #1c4995;
     color: white;
 }
@@ -47,10 +44,27 @@ input {
     flex-grow: 12;
 }
 
-.simple-keyboard.focused .hg-row:first-of-type {
-    opacity: 0.3;
+/* Highlight the home keys */
+
+.simple-keyboard .hg-row:nth-of-type(3) .hg-button:nth-of-type(5),
+.simple-keyboard .hg-row:nth-of-type(3) .hg-button:nth-of-type(8) {
+    position: relative;
 }
 
-#root .simple-keyboard.dark+.simple-keyboard-preview {
+.simple-keyboard .hg-row:nth-of-type(3) .hg-button:nth-of-type(5) ::after,
+.simple-keyboard .hg-row:nth-of-type(3) .hg-button:nth-of-type(8) ::after {
+    position: absolute;
+    /* content: '\00B7'; */
+    content: "";
+    display: block;
+    width: 20%;
+    height: 4px;
+    left: 40%;
+    bottom: 10%;
+    background-color: rgba(150, 150, 150, 0.2);
+    border-radius: 50em;
+}
+
+#root .simple-keyboard.dark + .simple-keyboard-preview {
     background: #1c4995;
 }
