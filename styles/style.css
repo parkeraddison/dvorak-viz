@@ -41,27 +41,55 @@ input {
 
 /* ========================================================================== */
 
+.simple-keyboard .hg-button {
+    position: relative;
+}
+.simple-keyboard .hg-button span {
+    position: absolute;
+}
+
+.simple-keyboard .hg-normal-width {
+    flex-grow: 1;
+}
+.simple-keyboard .hg-button-backspace {
+    flex-grow: 2;
+}
+.simple-keyboard .hg-button-tab {
+    flex-grow: 1.5;
+}
+.simple-keyboard .hg-button-backslash {
+    flex-grow: 1.5;
+}
+.simple-keyboard .hg-button-capslock {
+    flex-grow: 1.75;
+}
+.simple-keyboard .hg-button-enter {
+    flex-grow: 2.25;
+}
+.simple-keyboard .hg-button-shiftleft {
+    flex-grow: 2.25;
+}
+.simple-keyboard .hg-button-shiftright {
+    flex-grow: 2.75;
+}
+.simple-keyboard .hg-button-space {
+    flex-grow: 6.25;
+}
+
+.simple-keyboard .hg-button:not(.hg-normal-width) {
+    font-size: 0.8em;
+}
 .simple-keyboard .hg-disabled {
     opacity: 0.1;
     pointer-events: none;
 }
 
-.simple-keyboard .hg-button-space {
-    flex-grow: 12;
-}
-
 /* Highlight the home keys */
-
-.simple-keyboard .hg-row:nth-of-type(3) .hg-button:nth-of-type(5),
-.simple-keyboard .hg-row:nth-of-type(3) .hg-button:nth-of-type(8) {
-    position: relative;
-}
-
-.simple-keyboard .hg-row:nth-of-type(3) .hg-button:nth-of-type(5) ::after,
-.simple-keyboard .hg-row:nth-of-type(3) .hg-button:nth-of-type(8) ::after {
+.simple-keyboard .hg-row:nth-of-type(3) .hg-button:nth-of-type(5)::after,
+.simple-keyboard .hg-row:nth-of-type(3) .hg-button:nth-of-type(8)::after {
     position: absolute;
     /* content: '\00B7'; */
-    content: "";
+    content: '';
     display: block;
     width: 20%;
     height: 4px;

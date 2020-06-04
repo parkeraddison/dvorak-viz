@@ -11,7 +11,7 @@ let layouts = {
         '{controlleft} {metaleft} {altleft} {space} {altright} {fn} {controlright}',
     ],
     dvorak: [
-        '1 2 3 4 5 6 7 8 9 0 [ ] {backspace}',
+        '` 1 2 3 4 5 6 7 8 9 0 [ ] {backspace}',
         "{tab} ' , . p y f g c r l / = \\",
         '{capslock} a o e u i d h t n s - {enter}',
         '{shiftleft} ; q j k x b m w v z {shiftright}',
@@ -51,9 +51,21 @@ let buttonTheme = [
             '` 1 2 3 4 5 6 7 8 9 0 = {backspace} \
                 {tab} [ ] \\ \
                 {capslock} {enter} \
-                {shiftleft} / {shiftright} \
+                {shiftleft} {shiftright} \
                 {controlleft} {altleft} {metaleft} {controlright} {altright} {metaright} {fn}',
     },
+    {
+        class: 'hg-normal-width',
+        buttons:
+            "` 1 2 3 4 5 6 7 8 9 0 - = \
+            q w e r t y u i o p [ ] \
+            a s d f g h j k l ; ' \
+            z x c v b n m , . '"
+    },
+    {
+        class: 'hg-button-backslash',
+        buttons: '\\'
+    }
 ]
 
 let commonKeyboardOptions = {

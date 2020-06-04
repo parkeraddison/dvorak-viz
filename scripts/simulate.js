@@ -3,7 +3,8 @@ var DISTMULTIPLIER = 1;
 var ROWPENALTYMULTIPLIERS = [1, 1, 1, 1.2];
 var TIMESCALE = 80;
 var RESTTIME = 8;
-var ALLOWEDCHARACTERS = "-qwertyuiopasdfghjkl;'zxcvbnm,. ";
+// Would like to add eventual support for :\"<>?_
+var ALLOWEDCHARACTERS = "-qwertyuiopasdfghjkl;'zxcvbnm,./ ";
 var DEBUG = true;
 var RENDER = true;
 
@@ -83,46 +84,4 @@ function run(keyboard, word, verbose = false) {
         timesteps: timesteps,
         cost: timesteps.reduce((a, b) => a + b, 0),
     };
-}
-
-async function handleHighlights(keyboard, currChar, prevChar) {
-    try {
-        const prevButton = keyboard.getButtonElement(prevChar);
-        prevButton.classList.remove('hg-activeButton');
-    } catch {}
-    await sleep(RESTTIME);
-    try {
-        const currButton = keyboard.getButtonElement(currChar);
-        currButton.classList.add('hg-activeButton');
-    } catch {}
-}
-function sleep(ms) {
-    return new Promise((resolve) => setTimeout(resolve, ms));
-}
-
-async function renderPresses(keyboard, word, timesteps) {
-
-    let written = document.getElementById(`${keyboard.options.layoutName}-written`);
-
-    let prevChar;
-    let currChar;
-    written.innerHTML = '';
-    for (let idx = 0; idx < word.length; idx++) {
-        currChar = word[idx];
-
-        if (currChar === ' ') {
-            currChar = '{space}';
-            written.innerHTML += ' ';
-        } else {
-            written.innerHTML += currChar;
-        }
-
-        // Visually 'type' on the keyboard
-        handleHighlights(keyboard, currChar, prevChar);
-        prevChar = currChar;
-        await sleep(timesteps[idx] * TIMESCALE);
-    }
-
-    // Remove the highlight on the last character
-    handleHighlights(keyboard, null, prevChar);
 }
