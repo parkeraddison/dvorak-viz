@@ -1,15 +1,15 @@
-input {
+/* input {
     width: 100%;
     height: 100px;
     padding: 20px;
     font-size: 20px;
     border: none;
     box-sizing: border-box;
-}
-
+} */
+/* 
 .simple-keyboard {
     max-width: 850px;
-}
+} */
 
 .simple-keyboard.dark {
     background-color: rgba(0, 0, 0, 0.8);
@@ -30,12 +30,6 @@ input {
 .simple-keyboard.dark .hg-button:active,
 .simple-keyboard.dark .hg-button.hg-activeButton {
     background: #1c4995;
-    color: white;
-}
-
-.simple-keyboard.hg-theme-default .hg-button:active,
-.simple-keyboard.hg-theme-default .hg-button.hg-activeButton {
-    background: lightskyblue;
     color: white;
 }
 
@@ -99,11 +93,18 @@ input {
     border-radius: 50em;
 }
 
-#root .simple-keyboard.dark + .simple-keyboard-preview {
-    background: #1c4995;
+.simple-keyboard .hg-button:active,
+.simple-keyboard .hg-button.hg-activeButton {
+    background: var(--button-highlight);
+    color: white;
 }
 
 /* ========================================================================== */
+
+/* html, body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
 
 #results {
     overflow-wrap: break-word;
@@ -112,3 +113,117 @@ input {
 #results > * {
     padding: 1em;
 }
+
+#dvorak-sales {
+    font-family: 'CMU Typewriter Text';
+    font-size: 1.8em;
+    color: gainsboro;
+    padding: 2em;
+    line-height: 1;
+    letter-spacing: -1px;
+    height: 10em;
+    border: 1px solid gainsboro;
+}
+
+#dvorak-sales .highlight {
+    color: cornflowerblue;
+    font-size: 1.2em;
+    line-height: 0;
+} */
+
+/* === PAGE STYLING ========================================================= */
+
+:root {
+    --keyboard-scale: 1;
+    --keyboard-width: 750px;
+    --typewriter: 'CMU Typewriter Text';
+    --paper-color: #fffcf8;
+    --paper-color: #fdfaf4;
+}
+
+html,
+body {
+    font-family: 'IBM Plex Sans', 'Segoe UI', Tahoma, Geneva, Verdana,
+        sans-serif;
+    margin: 0;
+}
+
+#main-wrapper {
+    margin: 0 auto;
+    width: 100%;
+    max-width: 1200px;
+    position: relative;
+}
+
+main {
+    padding: 2em 0 18em 0;
+    margin-left: 2em;
+    margin-right: 15em;
+    position: relative;
+}
+
+main #input {
+    margin: 4em auto;
+    width: 100%;
+    border: none;
+    font-size: 1.5em;
+    min-height: 4em;
+    overflow-wrap: break-word;
+    overflow: visible;
+    resize: none;
+}
+
+main #keyboards {
+}
+
+.simple-keyboard {
+    width: var(--keyboard-width);
+    margin: 0 auto 2em;
+    transform: scale(var(--keyboard-scale), var(--keyboard-scale));
+}
+.qwerty-keyboard {
+    --button-highlight: lightskyblue;
+}
+.dvorak-keyboard {
+    --button-highlight: lightsalmon;
+}
+
+div#keyboards {
+    position: relative;
+}
+
+div#keyboards [id$='-written'] {
+    font-family: var(--typewriter);
+    margin: auto;
+    height: 3em;
+    padding: 1em 2em;
+    width: calc(var(--keyboard-width) - 2 * 2em - 1em);
+    overflow: auto;
+    display: flex;
+    flex-direction: column-reverse;
+    background-color: var(--paper-color);
+}
+div#keyboards [id$='-written'] > p {
+    margin: 0;
+    padding: 0;
+    font-size: 1.1em;
+}
+
+div#keyboards aside {
+    position: absolute;
+    left: 100%;
+    width: 15em;
+    
+}
+
+/* #keyboards [id$='-written'] > p u {
+    text-decoration: none;
+    position: relative;
+}
+#keyboards [id$='-written'] > p u::after {
+    content: '______';
+    position: absolute;
+    top: 4px;
+    left: 0;
+} */
+

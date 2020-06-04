@@ -26,6 +26,7 @@ let layouts = {
     //   "{controlleft} {altleft} {metaleft} {space} {metaright} {altright}"
     // ]
 }
+// '{backspace}': 'backspace ⌫',
 
 let display = {
     '{escape}': 'esc',
@@ -48,7 +49,7 @@ let buttonTheme = [
     {
         class: 'hg-disabled',
         buttons:
-            '` 1 2 3 4 5 6 7 8 9 0 = {backspace} \
+            '` = {backspace} \
                 {tab} [ ] \\ \
                 {capslock} {enter} \
                 {shiftleft} {shiftright} \
@@ -60,7 +61,7 @@ let buttonTheme = [
             "` 1 2 3 4 5 6 7 8 9 0 - = \
             q w e r t y u i o p [ ] \
             a s d f g h j k l ; ' \
-            z x c v b n m , . '"
+            z x c v b n m , . /"
     },
     {
         class: 'hg-button-backslash',

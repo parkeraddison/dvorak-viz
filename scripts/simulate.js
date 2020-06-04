@@ -1,11 +1,15 @@
-var FIXEDCOST = 0.4;
-var DISTMULTIPLIER = 1;
+// X and Y distance scales are in mm,
+// Source: https://hobgear.com/understand-keyboard-sizes/
+var XSCALE = 15.5 + 3.3;
+var YSCALE = 15 + 3.3;
 var ROWPENALTYMULTIPLIERS = [1, 1, 1, 1.2];
-var TIMESCALE = 80;
+var FIXEDCOST = 18;
+// For use in rendering
+var TIMESCALE = 2.5; // Roughly matches my typing speed.
 var RESTTIME = 8;
 // Would like to add eventual support for :\"<>?_
-var ALLOWEDCHARACTERS = "-qwertyuiopasdfghjkl;'zxcvbnm,./ ";
-var DEBUG = true;
+var ALLOWEDCHARACTERS = "1234567890\\-qwertyuiopasdfghjkl;'zxcvbnm,./ ";
+var DEBUG = false;
 var RENDER = true;
 
 // === SIMULATION ==============================================================
@@ -22,7 +26,7 @@ function parseWord(word) {
     return cleaned;
 }
 function distance(a, b) {
-    return Math.sqrt((a.x - b.x) ** 2 + (a.y - b.y) ** 2);
+    return Math.sqrt(((a.x - b.x) * XSCALE) ** 2 + ((a.y - b.y) * YSCALE) ** 2);
 }
 
 function run(keyboard, word, verbose = false) {
@@ -60,9 +64,7 @@ function run(keyboard, word, verbose = false) {
             let prevKey = kbfingers[kbkey.finger];
 
             dist = distance(kbkey, prevKey);
-            cost =
-                (dist * DISTMULTIPLIER + FIXEDCOST) *
-                ROWPENALTYMULTIPLIERS[kbkey.y];
+            cost = dist * ROWPENALTYMULTIPLIERS[kbkey.y] + FIXEDCOST;
 
             if (verbose) {
                 console.log(
@@ -82,6 +84,7 @@ function run(keyboard, word, verbose = false) {
         word: word,
         distances: distances,
         timesteps: timesteps,
+        distance: distances.reduce((a, b) => a + b, 0),
         cost: timesteps.reduce((a, b) => a + b, 0),
     };
 }

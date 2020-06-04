@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Dvorak Viz</title>
+        <title>QWERTY vs Dvorak</title>
 
         <!-- Load Francisco Hodge's `simple-keyboard` -->
         <link rel="stylesheet" href="hodgef-simple-keyboard/index.css" />
@@ -16,6 +16,37 @@
         <link rel="stylesheet" href="styles/style.css" />
     </head>
     <body>
+        <header></header>
+        <div id="main-wrapper">
+            <main>
+                <section class="narrow-width">
+                    <form action="" id="text-input">
+                        <textarea
+                            id="input"
+                            name="input"
+                            type="text"
+                            placeholder="Type something..."
+                        ></textarea>
+                    </form>
+                </section>
+                <section id="keyboards">
+                    <div id="keyboards">
+                        <div id="qwerty-written">
+                            <p id="text">My layout is <u>QWERTY</u></p>
+                        </div>
+                        <aside id="qwerty-score"></aside>
+                        <div class="simple-keyboard qwerty-keyboard"></div>
+                        <div id="dvorak-written">
+                            <p id="text">I'm the <u>Dvorak</u> layout</p>
+                        </div>
+                        <aside id="dvorak-score"></aside>
+                        <div class="simple-keyboard dvorak-keyboard"></div>
+                    </div>
+                </section>
+            </main>
+        </div>
+
+        <!-- 
         <form id="form">
             <input id="input" />
         </form>
@@ -24,17 +55,16 @@
         <br />
         <div class="simple-keyboard dvorak-keyboard"></div>
         <div id="dvorak-written"></div>
-
-        <br />
-
-        <!-- <button>Change Layout</button> -->
-
+        
         <div id="results">
             <div id="out"></div>
         </div>
-
+        
         <div id="chart-area">
         </div>
+        
+        <div id="dvorak-sales"></div>
+    -->
 
         <script src="scripts/keyboard.js"></script>
         <script src="scripts/layouts.js"></script>

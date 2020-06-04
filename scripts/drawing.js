@@ -1,5 +1,3 @@
-
-
 let chart;
 
 function cumsum(values) {
@@ -8,15 +6,15 @@ function cumsum(values) {
 }
 
 async function drawChart(keyboards, word, timesteps) {
-    let data = [
-        [],
-        []
-    ];
+    let data = [[], []];
 
     for (let i = 0; i < timesteps.length; i++) {
         let times = cumsum(timesteps[i]);
         for (let idx = 0; idx < timesteps[i].length; idx++) {
-            data[i].push([times[idx] * TIMESCALE / 1000, (idx + 1) / times.length]);
+            data[i].push([
+                (times[idx] * TIMESCALE) / 1000,
+                (idx + 1) / times.length,
+            ]);
         }
     }
 
@@ -29,13 +27,13 @@ async function drawChart(keyboards, word, timesteps) {
             },
         },
         title: {
-            text: word,
+            text: word.slice(0, 30),
         },
         yAxis: {
             title: {
                 text: 'Proportion complete',
             },
-            max: 1
+            max: 1,
         },
         xAxis: {
             title: {
@@ -46,11 +44,13 @@ async function drawChart(keyboards, word, timesteps) {
             {
                 name: 'QWERTY',
                 data: data[0],
+                // step: true,
             },
             {
                 name: 'Dvorak',
-                data: data[1]
-            }
+                data: data[1],
+                // step: true,
+            },
         ],
     });
 }
@@ -69,11 +69,26 @@ async function handleHighlights(keyboard, currChar, prevChar) {
 function sleep(ms) {
     return new Promise((resolve) => setTimeout(resolve, ms));
 }
+function writeOutput(element, character) {
+    if (character === ' ') {
+        character = '{space}';
+        element.innerHTML += ' ';
+    } else {
+        element.innerHTML += character;
+    }
+}
 
 async function renderPresses(keyboard, word, timesteps) {
+    var initialtimescale = TIMESCALE;
+    var initialresttime = RESTTIME;
+    if (word.length > 200) {
+        TIMESCALE = 0.3;
+        RESTTIME = 0.3;
+    }
+
     let written = document.getElementById(
         `${keyboard.options.layoutName}-written`
-    );
+    ).children[0];
 
     let prevChar;
     let currChar;
@@ -81,19 +96,19 @@ async function renderPresses(keyboard, word, timesteps) {
     for (let idx = 0; idx < word.length; idx++) {
         currChar = word[idx];
 
-        if (currChar === ' ') {
-            currChar = '{space}';
-            written.innerHTML += ' ';
-        } else {
-            written.innerHTML += currChar;
-        }
+        writeOutput(written, currChar);
 
         // Visually 'type' on the keyboard
         handleHighlights(keyboard, currChar, prevChar);
         prevChar = currChar;
+
         await sleep(timesteps[idx] * TIMESCALE);
     }
 
     // Remove the highlight on the last character
     handleHighlights(keyboard, null, prevChar);
+
+    // Reset timescale and rest time to initial values
+    TIMESCALE = initialtimescale;
+    RESTTIME = initialresttime;
 }
