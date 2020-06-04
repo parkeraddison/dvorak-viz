@@ -28,8 +28,14 @@ input {
 }
 
 .simple-keyboard.dark .hg-button:active,
-.simple-keyboard.dark .hg-activeButton {
+.simple-keyboard.dark .hg-button.hg-activeButton {
     background: #1c4995;
+    color: white;
+}
+
+.simple-keyboard.hg-theme-default .hg-button:active,
+.simple-keyboard.hg-theme-default .hg-button.hg-activeButton {
+    background: lightskyblue;
     color: white;
 }
 
@@ -67,4 +73,14 @@ input {
 
 #root .simple-keyboard.dark + .simple-keyboard-preview {
     background: #1c4995;
+}
+
+/* ========================================================================== */
+
+#results {
+    overflow-wrap: break-word;
+}
+
+#results > * {
+    padding: 1em;
 }
