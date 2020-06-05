@@ -74,11 +74,13 @@ function sleep(ms) {
     return new Promise((resolve) => setTimeout(resolve, ms));
 }
 function writeOutput(element, character) {
-    if (character === ' ') {
-        character = '{space}';
-        element.innerHTML += ' ';
-    } else {
-        element.innerHTML += character;
+
+    switch (character) {
+        case '\n':
+            element.innerHTML += '<br />'
+        default:
+            element.innerHTML += character;
+            break;
     }
 }
 

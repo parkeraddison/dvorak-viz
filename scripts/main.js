@@ -51,10 +51,9 @@ const written = document.querySelectorAll('[id$="-written"]');
 const score = document.querySelectorAll('[id$="-score"]');
 
 form.addEventListener('submit', (event) => {
-
     document.getElementById('typerace').scrollIntoView({
-        behavior: "smooth",
-        block: "start"
+        behavior: 'smooth',
+        block: 'start',
     });
 
     event.preventDefault();
@@ -64,14 +63,18 @@ form.addEventListener('submit', (event) => {
     console.log(qwOutput);
     console.log(dvOutput);
 
-    score[0].innerHTML = `Time: ${((qwOutput.cost * TIMESCALE) / 1000).toFixed(2)}s
+    score[0].innerHTML = `Time: ${((qwOutput.cost * TIMESCALE) / 1000).toFixed(
+        2
+    )}s
     <br />
-    Distance: ${(qwOutput.distance / 1000).toFixed(2)} meters
-    ` 
-    score[1].innerHTML = `Time: ${((dvOutput.cost * TIMESCALE) / 1000).toFixed(2)}s
+    Travel Distance: ${(qwOutput.distance / 1000).toFixed(2)}m
+    `;
+    score[1].innerHTML = `Time: ${((dvOutput.cost * TIMESCALE) / 1000).toFixed(
+        2
+    )}s
     <br />
-    Distance: ${(dvOutput.distance / 1000).toFixed(2)} meters
-    ` 
+    Travel Distance: ${(dvOutput.distance / 1000).toFixed(2)}m
+    `;
     if (RENDER) {
         renderPresses(qwKeyboard, qwOutput.word, qwOutput.timesteps);
         renderPresses(dvKeyboard, dvOutput.word, dvOutput.timesteps);
@@ -82,31 +85,22 @@ form.addEventListener('submit', (event) => {
     }
 });
 
-// Visualize Dvorak sales
-// fetch('./static/curse-of-qwerty-jared-diamond.txt')
-// .then((res) => res.text())
-// .then((text) => {
+const passage = document.getElementById('passage');
 async function visualizeSales() {
-    let text =
-        // 'The only real obstacle to our adoption of the Dvorak keyboard is that familiar fear of abandoning a long-held commitment. But if we were to overcome that fear, millions of our children would be able to learn to type with increased speed, greatly lowered finger fatigue, greater accuracy, and a reduced sense of frustration. That seems reason enough to end our commitment to QWERTY, a bad marriage that has long outlived its original justification.';
-        `Dvorak typists began to sweep typing speed contests two years later, and they have held most typing records ever since. A large-scale comparative test of several thousand children, carried out in the Tacoma schools in the 1930s, showed that children learned Dvorak typing in one- third the time required to attain the same standard with QWERTY typing. When the U.S. Navy faced a shortage of trained typists in World War II, it experimented with retraining QWERTY typists to use Dvorak. The retraining quickly enabled the Navy’s test typists to increase their typing accuracy by 68 percent and their speed by 74 percent. Faced with these convincing results, the Navy ordered thousands of Dvorak typewriters.
-        \n
-        They never got them. The Treasury Department vetoed the Navy purchase order, probably for the same reason that has blocked acceptance of all improved, non-QWERTY keyboards for the last 80 years: the commitment to QWERTY of tens of millions of typists, teachers, salespeople, office managers, and manufacturers. Even when daisy wheels and computer printers replaced type bars, forever banishing the jamming problem that had originally motivated QWERTY, manufacturers of the efficient new technologies carried on the inefficient old keyboard. August Dvorak died in 1975, a bitter man: I’m tired of trying to do something worthwhile for the human race, he complained. They simply don’t want to change!
-        \n
-        QWERTY’s saga illustrates a much broader phenomenon: how commitment shapes the history of technology and culture, often selecting which innovations become entrenched and which are rejected. In the nineteenth-century United States, for example, those who profited from canals, barges, stagecoaches, and the pony express resisted the construction of railroads; in England, electric street lighting spread slowly, partly because of opposition from local governments with heavy investments in gas lighting. Even today, commitment influences railroad gauges and television technology, and whether we mark our rulers with centimeters or inches and drive on the right or the left.`;
+    let text = `Dvorak typists began to sweep typing speed contests two years later, and they have held most typing records ever since. A large-scale comparative test of several thousand children, carried out in the Tacoma schools in the 1930s, showed that children learned Dvorak typing in one- third the time required to attain the same standard with QWERTY typing. When the U.S. Navy faced a shortage of trained typists in World War II, it experimented with retraining QWERTY typists to use Dvorak. The retraining quickly enabled the Navy’s test typists to increase their typing accuracy by 68 percent and their speed by 74 percent. Faced with these convincing results, the Navy ordered thousands of Dvorak typewriters.
+
+        They never got them. The Treasury Department vetoed the Navy purchase order, probably for the same reason that has blocked acceptance of all improved, non-QWERTY keyboards for the last 80 years: the commitment to QWERTY of tens of millions of typists, teachers, salespeople, office managers, and manufacturers. Even when daisy wheels and computer printers replaced type bars, forever banishing the jamming problem that had originally motivated QWERTY, manufacturers of the efficient new technologies carried on the inefficient old keyboard. August Dvorak died in 1975, a bitter man: I’m tired of trying to do something worthwhile for the human race, he complained. They simply don’t want to change!`;
 
     let textOutput = await run(qwKeyboard, text, false);
 
-    let textNode = document.getElementById('passage');
-
     let numToHighlight = Math.round(text.length * 0.001);
     let endIdx = text.length;
-    let startIdx = text.length - numToHighlight - 1;
+    let startIdx = text.length - numToHighlight;
 
-    let timescale = 0.5;
+    let timescale = 0.6;
     let prevChar;
     let currChar;
-    textNode.innerHTML = '';
+    passage.innerHTML = '';
     for (let idx = 0; idx < text.length; idx++) {
         currChar = text[idx];
 
@@ -114,7 +108,7 @@ async function visualizeSales() {
             currChar = '<span class="highlight">' + currChar;
         }
 
-        writeOutput(textNode, currChar);
+        writeOutput(passage, currChar);
         prevChar = currChar;
 
         // Make timescale longer at the end
@@ -129,6 +123,9 @@ async function visualizeSales() {
             case ',':
                 timing *= 2;
                 break;
+            case ':':
+                timing *= 5;
+                break;
             default:
                 break;
         }
@@ -136,17 +133,37 @@ async function visualizeSales() {
         await sleep(textOutput.timesteps[idx] * timing);
     }
 
-    return true;
+    document.querySelector('#conclusion aside').classList.remove('hidden');
+    document.querySelector('#conclusion aside').classList.add('revealed');
 }
 
-visualizeSales();
+var passageRendered = false;
+document.addEventListener('scroll', function triggerPassage() {
+    if (
+        window.pageYOffset + window.innerHeight / 2 >= passage.offsetTop &&
+        !passageRendered
+    ) {
+        visualizeSales();
+        passageRendered = true;
+    }
+});
 // });
 
 document.addEventListener('DOMContentLoaded', function init() {
-    // form.input.focus();
+    // Check if the form is in view on page load.  If so, then pull focus.
+    let bounding = form.input.getBoundingClientRect();
+    if (
+        bounding.top >= 0 &&
+        bounding.bottom <=
+            (window.innerHeight || document.documentElement.clientHeight)
+    ) {
+        form.input.focus();
+    }
     form.input.addEventListener('keypress', function submitOnEnter(e) {
         if (e.which === 13) {
-            event.target.form.dispatchEvent(new Event('submit', {cancelable: true}));
+            event.target.form.dispatchEvent(
+                new Event('submit', { cancelable: true })
+            );
             e.preventDefault();
         }
     });

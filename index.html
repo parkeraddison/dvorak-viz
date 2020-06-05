@@ -17,6 +17,7 @@
         <script src="smartquotes/smartquotes.js"></script>
 
         <style>
+            @import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
             @import url(./static/fonts/Concrete/cmun-concrete.css);
             @import url(./static/fonts/Typewriter/cmun-typewriter.css);
         </style>
@@ -26,7 +27,7 @@
         <div id="main-wrapper">
             <main>
                 <hgroup>
-                    <h1>Dvorak's favorite key.</h1>
+                    <h1>Dvorak's favorite key(board)</h1>
                     <h2>
                         Absurd or efficient? A visual comparison between the
                         QWERTY and Dvorak keyboard layouts
@@ -39,7 +40,7 @@
                             id="input"
                             name="input"
                             type="text"
-                            placeholder="Type something..."
+                            placeholder="Type something to compare efficiency..."
                         ></textarea>
                     </form>
                     <a id="typerace"></a>
@@ -65,25 +66,50 @@
                         <em>because</em> no one uses the Dvorak layout.
                     </p>
                     <p>
-                        Take the following excerpt from Jared Diamond's
+                        To illustrate this point, consider the following excerpt
+                        from Jared Diamond's
                         <a
                             href="https://www.discovermagazine.com/technology/the-curse-of-qwerty"
                             >"The Curse of QWERTY"</a
                         >
-                        for example -- the proportion of colored characters
+                        &mdash; the proportion of
+                        <span class="highlight">salmon colored characters</span>
                         below roughly matches the estimated proportion of Dvorak
-                        users...
+                        users in the English keyboard population.
                     </p>
                     <div id="dvorak-users">
-                        <aside>
+                        <blockquote id="passage"></blockquote>
+                        <aside class="hidden">
                             <p>
-                                Indeed, an estimated less than 0.1% of the U.S.
-                                population uses the Dvorak layout.
+                                Indeed, Dvorak's layout never got the necessary
+                                momentum to replace the status quo. By now, less
+                                than 0.1% of the U.S. population is estimated to
+                                use the Dvorak layout.
                             </p>
                         </aside>
-                        <blockquote id="passage"></blockquote>
+                        <!-- <div id="legend">
+                            <p>
+                                <span class="qwerty">QWERTY users</span>
+                                <span class="dvorak">Dvorak users</span>
+                            </p>
+                        </div> -->
                     </div>
                 </section>
+                <footer>
+                    <p>
+                        <!-- Thanks for stopping by, -->
+                        <a href="https://parkeraddison.com">
+                            <img
+                                src="./static/images/parker-headshot-small.jpg"
+                                alt=""
+                            />
+                            Made by Parker</a
+                        >,
+                        <a href="https://github.com/parkeraddison/dvorak-viz"
+                            ><code>&lt;/&gt;</code> on GitHub</a
+                        >
+                    </p>
+                </footer>
             </main>
         </div>
 
