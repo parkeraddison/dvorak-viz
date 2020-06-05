@@ -1,5 +1,9 @@
 let chart;
 
+Highcharts.setOptions({
+    colors: ["lightskyblue", "lightsalmon"]
+})
+
 function cumsum(values) {
     let sum = 0;
     return Float64Array.from(values, (v) => (sum += v));

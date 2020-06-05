@@ -114,23 +114,6 @@
     padding: 1em;
 }
 
-#dvorak-sales {
-    font-family: 'CMU Typewriter Text';
-    font-size: 1.8em;
-    color: gainsboro;
-    padding: 2em;
-    line-height: 1;
-    letter-spacing: -1px;
-    height: 10em;
-    border: 1px solid gainsboro;
-}
-
-#dvorak-sales .highlight {
-    color: cornflowerblue;
-    font-size: 1.2em;
-    line-height: 0;
-} */
-
 /* === PAGE STYLING ========================================================= */
 
 :root {
@@ -227,3 +210,28 @@ div#keyboards aside {
     left: 0;
 } */
 
+#charts {
+    margin: auto;
+    margin-top: 20em;
+}
+
+#conclusion {
+    margin: auto;
+    margin-top: 20em;
+}
+#dvorak-sales {
+    font-family: 'CMU Typewriter Text';
+    font-size: 1.6em;
+    color: #ccc;
+    padding: 2em;
+    line-height: 1;
+    letter-spacing: -1px;
+    height: 10em;
+    border: 1px solid gainsboro;
+}
+
+#dvorak-sales .highlight {
+    color: lightcoral;
+    font-size: 1.2em;
+    line-height: 0;
+} */
