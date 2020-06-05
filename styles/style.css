@@ -11,6 +11,11 @@
     max-width: 850px;
 } */
 
+.simple-keyboard .hg-button {
+    /* box-shadow: none; */
+    border: none;
+}
+
 .simple-keyboard.dark {
     background-color: rgba(0, 0, 0, 0.8);
     border-radius: 0;
@@ -118,23 +123,44 @@
 
 :root {
     --keyboard-scale: 1;
-    --keyboard-width: 750px;
+    --page-width: 1000px;
+    --keyboard-width: 90%;
     --typewriter: 'CMU Typewriter Text';
     --paper-color: #fffcf8;
-    --paper-color: #fdfaf4;
+    --paper-color: #fff8e8;
+    --dvorak-color: darksalmon;
+    --qwerty-color: lightskyblue;
+    --text-color: #00;
+    --text-color-light: #667;
 }
 
 html,
 body {
-    font-family: 'IBM Plex Sans', 'Segoe UI', Tahoma, Geneva, Verdana,
-        sans-serif;
+    /* font-family: 'IBM Plex Sans', 'Segoe UI', Tahoma, Geneva, Verdana,
+        sans-serif; */
+    /* font-family: Georgia, 'Times New Roman', Times, serif; */
+    font-family: sans-serif;
     margin: 0;
+    color: var(--text-color);
+}
+h1 {
+    font-style: italic;
+}
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'CMU Concrete';
+}
+p {
+    font-size: 20px;
+}
+a {
+    color: var(--text-color-light);
+    text-decoration: none;
 }
 
 #main-wrapper {
     margin: 0 auto;
     width: 100%;
-    max-width: 1200px;
+    max-width: var(--page-width);
     position: relative;
 }
 
@@ -145,7 +171,23 @@ main {
     position: relative;
 }
 
-main #input {
+section {
+    margin: auto;
+    margin-bottom: 20em;
+}
+
+aside {
+    position: absolute;
+    left: calc(100% + 3em);
+    width: calc(15em - 3em);
+}
+
+aside p {
+    font-size: 18px;
+    color: var(--text-color-light);
+}
+
+form #input {
     margin: 4em auto;
     width: 100%;
     border: none;
@@ -154,6 +196,7 @@ main #input {
     overflow-wrap: break-word;
     overflow: visible;
     resize: none;
+    color: gray;
 }
 
 main #keyboards {
@@ -165,10 +208,10 @@ main #keyboards {
     transform: scale(var(--keyboard-scale), var(--keyboard-scale));
 }
 .qwerty-keyboard {
-    --button-highlight: lightskyblue;
+    --button-highlight: var(--qwerty-color);
 }
 .dvorak-keyboard {
-    --button-highlight: lightsalmon;
+    --button-highlight: var(--dvorak-color);
 }
 
 div#keyboards {
@@ -178,60 +221,43 @@ div#keyboards {
 div#keyboards [id$='-written'] {
     font-family: var(--typewriter);
     margin: auto;
-    height: 3em;
+    height: 3.5em;
     padding: 1em 2em;
     width: calc(var(--keyboard-width) - 2 * 2em - 1em);
     overflow: auto;
     display: flex;
     flex-direction: column-reverse;
     background-color: var(--paper-color);
-}
-div#keyboards [id$='-written'] > p {
-    margin: 0;
-    padding: 0;
-    font-size: 1.1em;
-}
-
-div#keyboards aside {
-    position: absolute;
-    left: 100%;
-    width: 15em;
-    
-}
-
-/* #keyboards [id$='-written'] > p u {
-    text-decoration: none;
     position: relative;
 }
-#keyboards [id$='-written'] > p u::after {
-    content: '______';
+
+div#keyboards [id$='-written'] p {
+    margin: 0;
+}
+
+div#keyboards [id$='-written']::after {
+    content: '';
     position: absolute;
-    top: 4px;
+    height: 100%;
+    width: 100%;
     left: 0;
-} */
-
-#charts {
-    margin: auto;
-    margin-top: 20em;
+    top: 0;
+    /* background: blue; */
+    /* background: linear-gradient(top, rgba(0,0,0,0) 0%, var(--paper-color) 100%); */
+    background-image: -moz-linear-gradient(bottom, rgba(0,0,0,0) 60%, var(--paper-color) 100%);
 }
 
-#conclusion {
-    margin: auto;
-    margin-top: 20em;
-}
-#dvorak-sales {
-    font-family: 'CMU Typewriter Text';
+#passage {
+    font-family: var(--typewriter);
     font-size: 1.6em;
     color: #ccc;
-    padding: 2em;
     line-height: 1;
     letter-spacing: -1px;
     height: 10em;
-    border: 1px solid gainsboro;
 }
 
-#dvorak-sales .highlight {
+#passage .highlight {
     color: lightcoral;
-    font-size: 1.2em;
+    /* font-size: 1.2em; */
     line-height: 0;
-} */
+}

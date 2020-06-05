@@ -1,7 +1,7 @@
 let chart;
 
 Highcharts.setOptions({
-    colors: ["lightskyblue", "lightsalmon"]
+    colors: ["lightskyblue", "darksalmon"]
 })
 
 function cumsum(values) {
