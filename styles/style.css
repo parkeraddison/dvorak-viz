@@ -125,7 +125,8 @@
     --keyboard-scale: 1;
     --page-width: 1000px;
     --keyboard-width: 90%;
-    --typewriter: 'CMU Typewriter Text';
+    --heading: 'Computer Modern Concrete';
+    --typewriter: 'Computer Modern Typewriter';
     --paper-color: #fffcf8;
     --paper-color: #fff8e8;
     --dvorak-color: darksalmon;
@@ -146,8 +147,13 @@ body {
 h1 {
     font-style: italic;
 }
-h1, h2, h3, h4, h5, h6 {
-    font-family: 'CMU Concrete';
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: var(--heading);
 }
 p {
     font-size: 20px;
@@ -244,7 +250,11 @@ div#keyboards [id$='-written']::after {
     top: 0;
     /* background: blue; */
     /* background: linear-gradient(top, rgba(0,0,0,0) 0%, var(--paper-color) 100%); */
-    background-image: -moz-linear-gradient(bottom, rgba(0,0,0,0) 60%, var(--paper-color) 100%);
+    background-image: -moz-linear-gradient(
+        bottom,
+        rgba(0, 0, 0, 0) 60%,
+        var(--paper-color) 100%
+    );
 }
 
 #passage {
