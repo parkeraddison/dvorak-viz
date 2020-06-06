@@ -1,4 +1,3 @@
-
 const form = document.forms[0];
 // const button = document.querySelector('button');
 const written = document.querySelectorAll('[id$="-written"]');
@@ -10,14 +9,12 @@ form.addEventListener('submit', (event) => {
     typerace(form.input.value);
 });
 
-function revealScore(element, output) {
+function writeScore(element, output) {
     element.innerHTML = `
     Time: ${((output.cost * TIMESCALE) / 1000).toFixed(2)}s
     <br />
     Travel Distance: ${(output.distance / 1000).toFixed(2)}m
     `;
-    // element.classList.remove('hidden');
-    element.classList.add('revealed');
 }
 
 async function typerace(text) {
@@ -34,13 +31,22 @@ async function typerace(text) {
 
     renderPresses(qwKeyboard, qwOutput.word, qwOutput.timesteps).then(
         function () {
-            revealScore(score[0], qwOutput);
-            explanation.classList.add('revealed');
+            writeScore(score[0], qwOutput);
+            Array.from(
+                document.getElementsByClassName('qwerty-hidden')
+            ).forEach(element => {
+                element.classList.add("revealed");
+            });
         }
     );
     renderPresses(dvKeyboard, dvOutput.word, dvOutput.timesteps).then(
         function () {
-            revealScore(score[1], dvOutput);
+            writeScore(score[1], dvOutput);
+            Array.from(
+                document.getElementsByClassName('dvorak-hidden')
+            ).forEach(element => {
+                element.classList.add("revealed");
+            });
         }
     );
 
@@ -145,8 +151,7 @@ document.addEventListener('DOMContentLoaded', function init() {
 
 function randomLetters(length) {
     var result = '';
-    var characters =
-        'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
     var charactersLength = characters.length;
     for (var i = 0; i < length; i++) {
         result += characters.charAt(

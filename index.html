@@ -49,19 +49,24 @@
                         <div id="qwerty-written">
                             <p id="text">my layout is <u>QWERTY</u></p>
                         </div>
-                        <aside>
-                            <p class="hidden" id="qwerty-score"></p>
+                        <aside class="qwerty-hidden">
+                            <p id="qwerty-score"></p>
+                            <p class="note">
+                                <a href="">
+                                    How was <dfn>typing speed</dfn> calibrated?
+                                </a>
+                            </p>
                         </aside>
                         <div class="simple-keyboard qwerty-keyboard"></div>
                         <div id="dvorak-written">
                             <p id="text">i'm the <u>Dvorak</u> layout</p>
                         </div>
                         <aside>
-                            <p class="hidden" id="dvorak-score"></p>
+                            <p class="dvorak-hidden" id="dvorak-score"></p>
                         </aside>
                         <div class="simple-keyboard dvorak-keyboard"></div>
                     </div>
-                    <article class="hidden" id="explanation">
+                    <article class="qwerty-hidden" id="explanation">
                         <p>
                             The QWERTY keyboard was designed for early
                             typewriters. It's believed that the layout intended
@@ -73,14 +78,14 @@
                 </section>
                 <section id="travel-distance">
                     <aside>
-                        <p>
+                        <p class="qwerty-hidden">
                             In the passage above, your fingers would have
                             travelled
                             <span id="distance-percent">XX%</span> less if you
                             were using a Dvorak keyboard.
                         </p>
                         <p class="note">
-                            <a>
+                            <a href="">
                                 How was <dfn>travel distance</dfn> computed?
                             </a>
                         </p>
@@ -105,8 +110,8 @@
                     </aside>
                     <div id="row-chart"></div>
                     <figure>
-                        Pie chart - row percentage (two charts or some cooler
-                        way to overlay both)
+                        <!-- Pie chart - row percentage (two charts or some cooler
+                        way to overlay both) -->
                     </figure>
                 </section>
                 <section id="hand-alternating">
@@ -123,8 +128,8 @@
                         </p>
                     </aside>
                     <figure>
-                        Bar chart - percentage of consecutive keystrokes that
-                        alternated hands
+                        <!-- Bar chart - percentage of consecutive keystrokes that
+                        alternated hands -->
                     </figure>
                 </section>
                 <section id="conclusion">
