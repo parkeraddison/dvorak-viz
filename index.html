@@ -23,11 +23,12 @@
         </style>
         <link rel="stylesheet" href="styles/style.css" />
     </head>
+
     <body>
         <div id="main-wrapper">
             <main>
                 <hgroup>
-                    <h1>Dvorak's favorite key(board)</h1>
+                    <h1>Dvorak's keyboard</h1>
                     <h2>
                         Absurd or efficient? A visual comparison between the
                         QWERTY and Dvorak keyboard layouts
@@ -46,45 +47,123 @@
                     <a id="typerace"></a>
                     <div id="keyboards">
                         <div id="qwerty-written">
-                            <p id="text">My layout is <u>QWERTY</u></p>
+                            <p id="text">my layout is <u>QWERTY</u></p>
                         </div>
-                        <aside><p id="qwerty-score"></p></aside>
+                        <aside>
+                            <p class="hidden" id="qwerty-score"></p>
+                        </aside>
                         <div class="simple-keyboard qwerty-keyboard"></div>
                         <div id="dvorak-written">
-                            <p id="text">I'm the <u>Dvorak</u> layout</p>
+                            <p id="text">i'm the <u>Dvorak</u> layout</p>
                         </div>
-                        <aside><p id="dvorak-score"></p></aside>
+                        <aside>
+                            <p class="hidden" id="dvorak-score"></p>
+                        </aside>
                         <div class="simple-keyboard dvorak-keyboard"></div>
                     </div>
+                    <article class="hidden" id="explanation">
+                        <p>
+                            The QWERTY keyboard was designed for early
+                            typewriters. It's believed that the layout intended
+                            to place greater distance between the mechanical
+                            levers for common keys so that typing would cause
+                            less jams.
+                        </p>
+                    </article>
                 </section>
-                <section id="charts">
-                    <div id="chart-area"></div>
+                <section id="travel-distance">
+                    <aside>
+                        <p>
+                            In the passage above, your fingers would have
+                            travelled
+                            <span id="distance-percent">XX%</span> less if you
+                            were using a Dvorak keyboard.
+                        </p>
+                        <p class="note">
+                            <a>
+                                How was <dfn>travel distance</dfn> computed?
+                            </a>
+                        </p>
+                    </aside>
+                    <figure>
+                        <!-- Line chart - # characters typed versus Finger distance -->
+                        <div id="distance-chart"></div>
+                    </figure>
+                </section>
+                <section id="row-usage">
+                    <article>
+                        <p>
+                            The Dvorak keyboard endeavors to place [close
+                            together, home row]
+                        </p>
+                    </article>
+                    <aside>
+                        <p>
+                            here's a little tidbit of information, maybe a
+                            source for credibility
+                        </p>
+                    </aside>
+                    <div id="row-chart"></div>
+                    <figure>
+                        Pie chart - row percentage (two charts or some cooler
+                        way to overlay both)
+                    </figure>
+                </section>
+                <section id="hand-alternating">
+                    <article>
+                        <p>
+                            But also [hand alternating important for quick
+                            typing, since it allows getting ready]
+                        </p>
+                    </article>
+                    <aside>
+                        <p>
+                            Tip-tap &mdash; alternating keystrokes are also
+                            desirable for typing with your thumbs on a phone!
+                        </p>
+                    </aside>
+                    <figure>
+                        Bar chart - percentage of consecutive keystrokes that
+                        alternated hands
+                    </figure>
                 </section>
                 <section id="conclusion">
-                    <p>
-                        So why does no one use the Dvorak layout? Precisely
-                        <em>because</em> no one uses the Dvorak layout.
-                    </p>
-                    <p>
-                        To illustrate this point, consider the following excerpt
-                        from Jared Diamond's
-                        <a
-                            href="https://www.discovermagazine.com/technology/the-curse-of-qwerty"
-                            >"The Curse of QWERTY"</a
-                        >
-                        &mdash; the proportion of
-                        <span class="highlight">salmon colored characters</span>
-                        below roughly matches the estimated proportion of Dvorak
-                        users in the English keyboard population.
-                    </p>
+                    <article>
+                        <p>
+                            So why does no one use the Dvorak layout? Precisely
+                            <em>because</em> no one uses the Dvorak layout.
+                        </p>
+                        <p>
+                            To illustrate this point, consider the following
+                            excerpt from Jared Diamond's
+                            <a
+                                href="https://www.discovermagazine.com/technology/the-curse-of-qwerty"
+                                >"The Curse of QWERTY"</a
+                            >
+                            &mdash; the proportion of
+                            <span class="highlight"
+                                >salmon colored characters</span
+                            >
+                            below roughly matches the estimated proportion of
+                            Dvorak users in the English keyboard population.
+                        </p>
+                    </article>
                     <div id="dvorak-users">
                         <blockquote id="passage"></blockquote>
                         <aside class="hidden">
                             <p>
+                                [Might be nice to move the following paragraphs
+                                into an article, and have this aside mention and
+                                source a paper explaining the economic momentum
+                                or path dependence]
+                            </p>
+                            <p>
                                 Indeed, Dvorak's layout never got the necessary
-                                momentum to replace the status quo. By now, less
-                                than 0.1% of the U.S. population is estimated to
-                                use the Dvorak layout.
+                                momentum to replace the status quo.
+                            </p>
+                            <p>
+                                By now, less than 0.1% of the U.S. population is
+                                estimated to use the Dvorak layout.
                             </p>
                         </aside>
                         <!-- <div id="legend">
@@ -97,7 +176,6 @@
                 </section>
                 <footer>
                     <p>
-                        <!-- Thanks for stopping by, -->
                         <a href="https://parkeraddison.com">
                             <img
                                 src="./static/images/parker-headshot-small.jpg"

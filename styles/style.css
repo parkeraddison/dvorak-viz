@@ -1,44 +1,9 @@
-/* input {
-    width: 100%;
-    height: 100px;
-    padding: 20px;
-    font-size: 20px;
-    border: none;
-    box-sizing: border-box;
-} */
-/* 
-.simple-keyboard {
-    max-width: 850px;
-} */
+/* === KEYBOARD STYLING ===================================================== */
 
 .simple-keyboard .hg-button {
     /* box-shadow: none; */
     border: none;
 }
-
-.simple-keyboard.dark {
-    background-color: rgba(0, 0, 0, 0.8);
-    border-radius: 0;
-    border-bottom-right-radius: 5px;
-    border-bottom-left-radius: 5px;
-}
-
-.simple-keyboard.dark .hg-button {
-    height: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: rgba(0, 0, 0, 0.5);
-    color: white;
-}
-
-.simple-keyboard.dark .hg-button:active,
-.simple-keyboard.dark .hg-button.hg-activeButton {
-    background: #1c4995;
-    color: white;
-}
-
-/* ========================================================================== */
 
 .simple-keyboard .hg-button {
     position: relative;
@@ -87,7 +52,6 @@
 .simple-keyboard .hg-row:nth-of-type(3) .hg-button:nth-of-type(5)::after,
 .simple-keyboard .hg-row:nth-of-type(3) .hg-button:nth-of-type(8)::after {
     position: absolute;
-    /* content: '\00B7'; */
     content: '';
     display: block;
     width: 20%;
@@ -104,30 +68,16 @@
     color: white;
 }
 
-/* ========================================================================== */
-
-/* html, body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-
-#results {
-    overflow-wrap: break-word;
-}
-
-#results > * {
-    padding: 1em;
-}
-
 /* === PAGE STYLING ========================================================= */
 
 :root {
     --keyboard-scale: 1;
     --page-width: 1000px;
     --keyboard-width: 90%;
-    --heading: 'Computer Modern Concrete';
-    --typewriter: 'Computer Modern Typewriter';
-    --sans-serif: 'Open Sans';
+    --display: 'Computer Modern Concrete', Georgia, 'Times New Roman', serif;
+    --typewriter: 'Computer Modern Typewriter', Courier, monospace;
+    --monospace: Consolas, Menlo, monospace;
+    --sans-serif: 'Open Sans', 'Segoe UI', Verdana, Helvetica, sans-serif;
     --paper-color: #fffcf8;
     --paper-color: #fff8e8;
     --dvorak-color: darksalmon;
@@ -138,9 +88,6 @@
 
 html,
 body {
-    /* font-family: 'IBM Plex Sans', 'Segoe UI', Tahoma, Geneva, Verdana,
-        sans-serif; */
-    /* font-family: Georgia, 'Times New Roman', Times, serif; */
     font-family: var(--sans-serif);
     margin: 0;
     color: var(--text-color);
@@ -154,7 +101,7 @@ h3,
 h4,
 h5,
 h6 {
-    font-family: var(--heading);
+    font-family: var(--display);
 }
 p {
     font-size: 20px;
@@ -164,7 +111,8 @@ a {
     text-decoration: none;
     border-bottom: 1px solid gainsboro;
 }
-a:hover, a:focus {
+a:hover,
+a:focus {
     color: lightskyblue;
 }
 
@@ -176,7 +124,7 @@ a:hover, a:focus {
 }
 
 main {
-    padding: 2em 0 18em 0;
+    padding: 2em 0;
     margin-left: 2em;
     margin-right: 15em;
     position: relative;
@@ -184,7 +132,10 @@ main {
 
 section {
     margin: auto;
-    margin-bottom: 20em;
+}
+
+article {
+    margin: 8em 0;
 }
 
 aside {
@@ -198,14 +149,26 @@ aside p {
     color: var(--text-color-light);
 }
 
+aside p.note {
+    font-size: 14px;
+}
+
+figure {
+    height: 400px;
+    width: 600px;
+    background: #f0f0f0;
+    margin: auto;
+}
+
 footer {
+    margin-top: 10em;
     text-align: center;
 }
 
 footer p,
 footer a {
     color: #ccc;
-    font-size: 18px;
+    font-size: 14px;
     border: none;
 }
 
@@ -215,6 +178,10 @@ footer img {
     top: 0.3em;
     border: 1.5px solid gainsboro;
     border-radius: 100%;
+}
+
+code {
+    font-family: var(--monospace);
 }
 
 .hidden {
@@ -241,39 +208,19 @@ form #input {
 
 @-webkit-keyframes blinker {
     50% {
-      opacity: 0;
+        opacity: 0;
     }
-  }
+}
 
 @keyframes blinker {
     50% {
-      opacity: 0;
+        opacity: 0;
     }
-  }
-
-form #input::-webkit-input-placeholder {
-    -webkit-animation: blinker 1s linear infinite;
-            animation: blinker 1s linear infinite;
-}
-
-form #input::-moz-placeholder {
-    animation: blinker 1s linear infinite;
-}
-
-form #input:-ms-input-placeholder {
-    animation: blinker 1s linear infinite;
-}
-
-form #input::-ms-input-placeholder {
-    animation: blinker 1s linear infinite;
 }
 
 form #input::placeholder {
     -webkit-animation: blinker 1s linear infinite;
-            animation: blinker 1s linear infinite;
-}
-
-main #keyboards {
+    animation: blinker 1s linear infinite;
 }
 
 .simple-keyboard {
@@ -290,6 +237,7 @@ main #keyboards {
 
 div#keyboards {
     position: relative;
+    margin-bottom: 8em;
 }
 
 div#keyboards [id$='-written'] {
@@ -297,7 +245,7 @@ div#keyboards [id$='-written'] {
     margin: auto;
     height: 3.5em;
     padding: 1em 2em;
-    width: calc(var(--keyboard-width) - 2 * 2em - 1em);
+    width: calc(var(--keyboard-width) - 2 * 2em - 2em);
     overflow: auto;
     display: flex;
     flex-direction: column-reverse;
@@ -307,6 +255,7 @@ div#keyboards [id$='-written'] {
 
 div#keyboards [id$='-written'] p {
     margin: 0;
+    word-wrap: break-word;
 }
 
 div#keyboards [id$='-written']::after {
@@ -326,12 +275,29 @@ div#keyboards [id$='-written']::after {
 }
 
 #passage {
+    margin: 1.5em;
     font-family: var(--typewriter);
     font-size: 24px;
     color: #ccc;
     line-height: 1;
     letter-spacing: -1px;
-    height: 30em;
+    height: 28em; /* Yikes.  Need to change if page width gets smaller. */
+    position: relative;
+    /* Just had an idea:
+    How about I have a version of the passage that isn't viewable in order to
+    set the height of a container.  Then I just use this one visually.
+    */
+}
+
+#passage::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -1.5em;
+    height: 100%;
+    width: 4px;
+    display: block;
+    background-color: gainsboro;
 }
 
 #conclusion .highlight {
@@ -350,4 +316,3 @@ div#keyboards [id$='-written']::after {
 #conclusion #legend p {
     text-align: center;
 }
-

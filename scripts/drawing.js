@@ -9,40 +9,40 @@ function cumsum(values) {
     return Float64Array.from(values, (v) => (sum += v));
 }
 
-async function drawChart(keyboards, word, timesteps) {
+async function distanceChart(keyboards, text, distances) {
     let data = [[], []];
 
-    for (let i = 0; i < timesteps.length; i++) {
-        let times = cumsum(timesteps[i]);
-        for (let idx = 0; idx < timesteps[i].length; idx++) {
+    for (let i = 0; i < distances.length; i++) {
+        let dists = cumsum(distances[i]);
+        for (let idx = 0; idx < distances[i].length; idx++) {
             data[i].push([
-                (times[idx] * TIMESCALE) / 1000,
-                (idx + 1) / times.length,
+                (idx + 1) / dists.length,
+                dists[idx] / 1000
             ]);
         }
     }
 
-    chart = Highcharts.chart('chart-area', {
-        chart: {
-            events: {
-                load: function () {
-                    let series = this.series[0];
-                },
-            },
+    chart = Highcharts.chart('distance-chart', {
+        plotOptions: {
+            line: {
+                marker: {
+                    enabled: false
+                }
+            }
         },
-        title: {
-            text: word.slice(0, 30),
-        },
+        title: undefined,
         yAxis: {
             title: {
-                text: 'Proportion complete',
-            },
-            max: 1,
+                text: 'Travel Distance (meters)',
+            }
         },
         xAxis: {
             title: {
-                text: 'Time (s)',
+                text: 'Characters Typed',
             },
+        },
+        tooltip: {
+            pointFormat: '{point.y:.2f}'
         },
         series: [
             {
