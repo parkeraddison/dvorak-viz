@@ -1,16 +1,19 @@
 // X and Y distance scales are in mm,
 // Source: https://hobgear.com/understand-keyboard-sizes/
-var XSCALE = 15.5 + 3.3;
-var YSCALE = 15 + 3.3;
-var ROWPENALTYMULTIPLIERS = [1, 1, 1, 1.2];
-var FIXEDCOST = 18;
+const XSCALE = 15.5 + 3.3;
+const YSCALE = 15 + 3.3;
+const ZDEPTH = 2; // The travel distance of a key.  Laptops and low-profile is
+// usually 2mm, external keyboards usually 3.5 - 4mm.
+// https://en.wikipedia.org/wiki/Keyboard_technology#Scissor-switch_keyboard
+const ROWPENALTYMULTIPLIERS = [1, 1, 1, 1.2];
+const FIXEDCOST = 18;
 // For use in rendering
-var TIMESCALE = 2.5; // Roughly matches my typing speed.
-var RESTTIME = 8;
+const TIMESCALE = 5.25; // Calibrated to roughly 70 WPM on QWERTY
+const RESTTIME = 50;
 // Would like to add eventual support for :\"<>?_
-var ALLOWEDCHARACTERS = "1234567890\\-qwertyuiopasdfghjkl;'zxcvbnm,./ ";
-var DEBUG = false;
-var RENDER = true;
+const ALLOWEDCHARACTERS = "1234567890\\-qwertyuiopasdfghjkl;'zxcvbnm,./ ";
+const DEBUG = false;
+const RENDER = true;
 
 // === SIMULATION ==============================================================
 
@@ -29,8 +32,8 @@ function distance(a, b) {
     return Math.sqrt(((a.x - b.x) * XSCALE) ** 2 + ((a.y - b.y) * YSCALE) ** 2);
 }
 
-function run(keyboard, word, verbose = false) {
-    word = parseWord(word);
+function run(keyboard, text, verbose = false) {
+    text = parseWord(text);
 
     let layoutName = keyboard.options.layoutName;
     let layoutkeys = kbkeys[layoutName];
@@ -46,25 +49,40 @@ function run(keyboard, word, verbose = false) {
 
     let distances = [];
     let timesteps = [];
+    let rowUsage = {
+        0: 0, 1: 0, 2: 0, 3: 0
+    }
+    let alternating = 0;
 
-    for (const character of word) {
-        let dist;
-        let cost;
+    let prevChar;
+    for (const character of text) {
+        let dist = ZDEPTH;
+        let cost = FIXEDCOST;
         // Spaces have zero distance cost since we use our thumbs.
         if (character === ' ') {
-            dist = 0;
-            cost = FIXEDCOST;
-
             if (verbose) {
                 console.log(`Typing space.`);
             }
         } else {
             let kbkey = layoutkeys[character];
 
+            // Add to the row counter for the corresponding y value.
+            rowUsage[kbkey.y] += 1;
+
+            // If the next key is on a new hand, add to the alternating counter
+            if (prevChar) {
+                let prevHand = layoutkeys[prevChar].finger < 5;
+                if (prevHand != kbkey.finger < 4) {
+                    alternating += 1;
+                }
+            }
+            prevChar = character;
+
             let prevKey = kbfingers[kbkey.finger];
 
-            dist = distance(kbkey, prevKey);
-            cost = dist * ROWPENALTYMULTIPLIERS[kbkey.y] + FIXEDCOST;
+
+            dist += distance(kbkey, prevKey);
+            cost += dist * ROWPENALTYMULTIPLIERS[kbkey.y];
 
             if (verbose) {
                 console.log(
@@ -81,10 +99,12 @@ function run(keyboard, word, verbose = false) {
     }
 
     return {
-        word: word,
+        text: text,
         distances: distances,
         timesteps: timesteps,
         distance: distances.reduce((a, b) => a + b, 0),
         cost: timesteps.reduce((a, b) => a + b, 0),
+        rowUsage: rowUsage,
+        alternating: alternating,
     };
 }

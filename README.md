@@ -7,27 +7,24 @@ A visual exploration of the efficiency difference between common and obscure key
 ## Notes
 
 ### TODO
-- timescale should be calibrated so that QWERTY will achieve a certain WPM (?)
-                                                    (slider)
+- originally position keyboards off screen and input text in center -- this will be less confusing to newcomers
 - paths on keyboard                                 (abstract)
-- full distance (not using fingers)
-    - full distance compared to finger distance
-- row usage                                         (pie)
-    - I'd like a cooler way to compare the two... but pie seems the most appropriate.
-- alphabetical keyboard (?)
 - percent of keystrokes that alternated hands       (bar)
-    
 - modify distance calculation:
     - After typing a key, the finger should return back to the home positions
     after a letter or two passes without them being called.
     - This can wait
+- **fix distance calculation**:
+    - I noticed that repeatedly pressing a key that isn't in an initial position is still adding a distance when it shouldn't. e.x. `pppppp`
+    - **(urgent)**
 - text presets
-- if you click a key on the keyboard, it'll add to the input area
 - add tooltip legend to the passage
 
-### Idea for ending
+### Ideas for ending
 
 *At the end of the day, I could have saved at least XX minutes of my life if I had just written this using a Dvorak keyboard... and you could have saved \<insert the total amount of time delta for all characters that were ever entered into the input area>*
+
+*RIP Dvorak.*
 
 ### Proportion of Dvorak users
 - https://www.csmonitor.com/1995/0817/17092.html
@@ -59,6 +56,7 @@ The Dvorak Keyboard, QWERTY, and Typewriters
 - https://www.discovermagazine.com/technology/the-curse-of-qwerty
 - https://www.dvorak-keyboard.com/
 - https://en.wikipedia.org/wiki/Dvorak_keyboard_layout
+- https://en.m.wikipedia.org/wiki/Dvorak_keyboard_layout#Overview
 - https://en.wikipedia.org/wiki/QWERTY
 - https://en.wikipedia.org/wiki/Typewriter
 

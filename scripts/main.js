@@ -9,12 +9,23 @@ form.addEventListener('submit', (event) => {
     typerace(form.input.value);
 });
 
-function writeScore(element, output) {
-    element.innerHTML = `
-    Time: ${((output.cost * TIMESCALE) / 1000).toFixed(2)}s
-    <br />
-    Travel Distance: ${(output.distance / 1000).toFixed(2)}m
-    `;
+function writeScore(element, text, output) {
+    if (output) {
+        let time = ((output.cost * TIMESCALE) / 1000).toFixed(2);
+        element.innerHTML = `
+        Time: ${time}s
+        <small>(${Math.round(((text.length / 5) * 60) / time)} WPM)</small>
+        <br />
+        Travel Distance: ${(output.distance / 1000).toFixed(2)}m
+        `;
+    } else {
+        element.innerHTML = `
+        Time: ...
+        <br />
+        Travel Distance: ...
+        `;
+    }
+
 }
 
 async function typerace(text) {
@@ -29,31 +40,44 @@ async function typerace(text) {
     console.log(qwOutput);
     console.log(dvOutput);
 
-    renderPresses(qwKeyboard, qwOutput.word, qwOutput.timesteps).then(
+    writeScore(score[0], null, null);
+    writeScore(score[1], null, null);
+
+    renderPresses(qwKeyboard, qwOutput.text, qwOutput.timesteps).then(
         function () {
-            writeScore(score[0], qwOutput);
+            writeScore(score[0], text, qwOutput);
             Array.from(
                 document.getElementsByClassName('qwerty-hidden')
-            ).forEach(element => {
-                element.classList.add("revealed");
+            ).forEach((element) => {
+                element.classList.add('revealed');
             });
         }
     );
-    renderPresses(dvKeyboard, dvOutput.word, dvOutput.timesteps).then(
+    renderPresses(dvKeyboard, dvOutput.text, dvOutput.timesteps).then(
         function () {
-            writeScore(score[1], dvOutput);
+            writeScore(score[1], text, dvOutput);
             Array.from(
                 document.getElementsByClassName('dvorak-hidden')
-            ).forEach(element => {
-                element.classList.add("revealed");
+            ).forEach((element) => {
+                element.classList.add('revealed');
             });
         }
     );
 
-    distanceChart([qwKeyboard, dvKeyboard], text, [
+    let distancePercent = Math.round(
+        (1 - dvOutput.distance / qwOutput.distance) * 100
+    );
+    document.getElementById('distance-percent').innerText =
+        distancePercent >= 0
+        ? `${distancePercent}% less`
+        : `${-distancePercent}% more`;
+
+    drawDistanceChart([qwKeyboard, dvKeyboard], text, [
         qwOutput.distances,
         dvOutput.distances,
     ]);
+
+    drawRowChart([qwKeyboard, dvKeyboard], [qwOutput.rowUsage, dvOutput.rowUsage]);
 }
 
 const passage = document.getElementById('passage');
