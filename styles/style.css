@@ -108,7 +108,7 @@ p {
     font-size: 20px;
 }
 a {
-    color: var(--text-color-light);
+    color: var(--text-color);
     text-decoration: none;
     border-bottom: 1px solid gainsboro;
 }
@@ -121,7 +121,7 @@ a:focus {
     margin: 0 auto;
     width: 100%;
     max-width: var(--page-width);
-    position: relative;
+    /* position: relative; */
 }
 
 main {
@@ -151,11 +151,12 @@ aside p {
     color: var(--text-color-light);
 }
 
-aside p.note {
+aside p.note a {
     font-size: 14px;
+    color: var(--text-color-light);
 }
 
-[id^=fnref] a {
+[id^='fnref'] a {
     /* padding: 0 3px; */
     border: none;
 }
@@ -169,7 +170,7 @@ figure {
 }
 
 figure::before {
-    content: "There will be a chart here once you enter some text to visualize!";
+    content: 'There will be a chart here once you enter some text to visualize!';
     font-size: 16px;
     position: absolute;
     top: 50%;
@@ -204,43 +205,13 @@ code {
     font-family: var(--monospace);
 }
 
-[class$="-hidden"] {
+[class$='hidden'] {
     opacity: 0;
     transition: opacity 0.3s;
 }
 .revealed {
     opacity: 1;
     transition: opacity 0.3s;
-}
-
-form #input {
-    font-family: var(--sans-serif);
-    margin: 4em auto;
-    width: 100%;
-    border: none;
-    font-size: 20px;
-    min-height: 4em;
-    overflow-wrap: break-word;
-    overflow: visible;
-    resize: none;
-    color: var(--text-color-light);
-}
-
-@-webkit-keyframes blinker {
-    50% {
-        opacity: 0;
-    }
-}
-
-@keyframes blinker {
-    50% {
-        opacity: 0;
-    }
-}
-
-form #input::placeholder {
-    -webkit-animation: blinker 1s linear infinite;
-    animation: blinker 1s linear infinite;
 }
 
 .simple-keyboard {
@@ -326,29 +297,74 @@ div#keyboards [id$='-written']::after {
     background-color: #cccccc88;
 }
 
-#conclusion .highlight {
-    color: darksalmon;
-    box-shadow: inset 0 -2px 0 0 darksalmon;
-    background-color: rgba(233, 150, 122, 0.2);
-    /* font-size: 1.2em; */
-    line-height: 0;
-}
-
-#conclusion aside p {
+#passage-proportion aside p {
     position: relative;
     top: -20em;
 }
 
-#conclusion #legend p {
-    text-align: center;
-}
-
 /* Manual border for column chart */
-.highcharts-series rect:nth-of-type(1) {
+/* .highcharts-series rect:nth-of-type(1) {
     stroke: var(--qwerty-color);
     stroke-width: 4;
 }
 .highcharts-series rect:nth-of-type(2) {
     stroke: var(--dvorak-color);
     stroke-width: 4;
+} */
+
+/* LANDING */
+#landing {
+    display: grid;
+    height: 100vh;
+    grid-template-rows: min-content 1fr;
+}
+hgroup#title {
+    font-size: 1.2em;
+}
+h1 {
+    font-size: 2em;
+}
+
+@keyframes slideIn {
+    0% {
+        top: 2em;
+        opacity: 0;
+    }
+    100% {
+        top: 0;
+        opacity: 1;
+    }
+}
+
+form {
+    position: relative;
+    top: 0;
+    max-width: var(--page-width);
+    width: 100%;
+    margin: auto;
+    align-self: center;
+    height: 50%;
+    animation: slideIn 0.5s ease-in-out;
+}
+form #input {
+    font-family: var(--sans-serif);
+    width: 100%;
+    border: none;
+    font-size: 20px;
+    height: 100%;
+    overflow-wrap: break-word;
+    overflow: visible;
+    resize: none;
+    color: var(--text-color-light);
+}
+
+.highlight-qwerty {
+    color: var(--qwerty-color);
+    /* box-shadow: inset 0 -0.1em 0 0 var(--qwerty-color); */
+    background-color: #87cefa22;
+}
+.highlight-dvorak {
+    color: var(--dvorak-color);
+    /* box-shadow: inset 0 -0.1em 0 0 var(--dvorak-color); */
+    background-color: #E9967A22;
 }

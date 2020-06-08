@@ -1,7 +1,20 @@
 let distanceChart;
+let rowChart;
+let handChart;
 
 Highcharts.setOptions({
     colors: ['lightskyblue', 'darksalmon'],
+    credits: {
+        enabled: false,
+    },
+    title: {
+        style: {
+            color: 'var(--text-color-light)',
+            fontWeight: 'bold',
+            fontSize: '16px',
+            padding: '1em',
+        }
+    }
 });
 
 function cumsum(values) {
@@ -9,14 +22,59 @@ function cumsum(values) {
     return Float64Array.from(values, (v) => (sum += v));
 }
 
-async function drawRowChart(keyboards, rowUsages) {
+async function drawHandChart(text, alternatings) {
+    let data = alternatings.map(d => d / (text.length - 1) * 100);
+
+    handChart = Highcharts.chart('hand-chart', {
+        plotOptions: {
+            column: {
+                colorByPoint: true,
+            }
+        },
+        chart: {
+            type: 'column',
+        },
+        tooltip: {
+            formatter: function () {
+                let percents = this.series.yData.map(
+                    (d) => Math.round(d) + '%'
+                );
+                return `
+                <b>QWERTY:</b> ${percents[0]} 
+                <br />
+                <b>Dvorak:</b> ${percents[1]} 
+                `;
+            },
+        },
+        title: {
+            text: 'Percent keystrokes that alternated hands',
+        },
+        xAxis: {
+            categories: ['QWERTY', 'Dvorak'],
+        },
+        yAxis: {
+            title: undefined,
+            labels: {
+                format: '{value}%',
+            },
+        },
+        series: [
+            {
+                data: data,
+                showInLegend: false,
+            },
+        ],
+    });
+}
+
+async function drawRowChart(rowUsages) {
     let data = [];
 
     for (const idx in rowUsages[0]) {
         data.push([rowUsages[0][idx], rowUsages[1][idx]]);
     }
 
-    distanceChart = Highcharts.chart('row-chart', {
+    rowChart = Highcharts.chart('row-chart', {
         plotOptions: {
             column: {
                 stacking: 'percent',
@@ -27,10 +85,13 @@ async function drawRowChart(keyboards, rowUsages) {
                     pointFormat: `
                     <span style="color: #ffffff88; z-index: 0; font-size: 20px;">
                     <small>{series.name}</small>
-                    <br />
+                    
                     {point.percentage:.0f}%
                     </span>`,
                     useHTML: true,
+                    crop: false,
+                    allowOverlap: false,
+                    align: 'center',
                 },
             },
         },
@@ -40,17 +101,15 @@ async function drawRowChart(keyboards, rowUsages) {
         colors: ['#619B8A', '#A1C181', '#99C24D', '#EC5766'],
         chart: {
             type: 'column',
-            marginTop: 20,
-        },
-        credits: {
-            enabled: false,
+            // marginTop: 20,
         },
         tooltip: {
             formatter: function () {
                 let percents = this.series.yData.map(
                     (d) => Math.round((d / this.total) * 100) + '%'
                 );
-                return `Row: ${this.series.name}
+                return `
+                ${this.series.name}
                 <br />
                 <b>QWERTY:</b> ${percents[0]} 
                 <br />
@@ -59,7 +118,7 @@ async function drawRowChart(keyboards, rowUsages) {
             },
         },
         title: {
-            text: undefined,
+            text: 'Row distribution of typed characters',
         },
         yAxis: {
             title: undefined,
@@ -83,7 +142,7 @@ async function drawRowChart(keyboards, rowUsages) {
         },
         series: [
             {
-                name: 'Numeric',
+                name: 'Numeric row',
                 data: data[0],
                 showInLegend: data[0].some((d) => d > 0),
                 dataLabels: {
@@ -91,7 +150,7 @@ async function drawRowChart(keyboards, rowUsages) {
                 },
             },
             {
-                name: 'Top',
+                name: 'Top row',
                 data: data[1],
                 showInLegend: data[1].some((d) => d > 0),
                 dataLabels: {
@@ -99,7 +158,7 @@ async function drawRowChart(keyboards, rowUsages) {
                 },
             },
             {
-                name: 'Home',
+                name: 'Home row',
                 data: data[2],
                 showInLegend: data[2].some((d) => d > 0),
                 dataLabels: {
@@ -110,7 +169,7 @@ async function drawRowChart(keyboards, rowUsages) {
                 },
             },
             {
-                name: 'Bottom',
+                name: 'Bottom row',
                 data: data[3],
                 showInLegend: data[3].some((d) => d > 0),
                 dataLabels: {
@@ -147,11 +206,13 @@ async function drawDistanceChart(keyboards, text, distances) {
             enabled: false,
         },
         chart: {
-            marginTop: 20,
+            // marginTop: 60,
             marginLeft: 100,
             marginRight: 80,
         },
-        title: undefined,
+        title: {
+            text: 'Travel distance of fingers',
+        },
         yAxis: {
             title: {
                 text: 'Distance (meters)',
@@ -265,3 +326,7 @@ async function renderPresses(keyboard, word, timesteps) {
     }
     return;
 }
+
+
+
+// Make bar category labels larger

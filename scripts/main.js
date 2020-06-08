@@ -77,7 +77,9 @@ async function typerace(text) {
         dvOutput.distances,
     ]);
 
-    drawRowChart([qwKeyboard, dvKeyboard], [qwOutput.rowUsage, dvOutput.rowUsage]);
+    drawRowChart([qwOutput.rowUsage, dvOutput.rowUsage]);
+
+    drawHandChart(text, [qwOutput.alternating, dvOutput.alternating]);
 }
 
 const passage = document.getElementById('passage');
@@ -100,7 +102,7 @@ async function renderPassage() {
         currChar = text[idx];
 
         if (idx >= startIdx) {
-            currChar = '<span class="highlight">' + currChar;
+            currChar = '<span class="highlight-dvorak">' + currChar;
         }
 
         writeOutput(passage, currChar);
@@ -128,8 +130,7 @@ async function renderPassage() {
         await sleep(textOutput.timesteps[idx] * timing);
     }
 
-    document.querySelector('#conclusion aside').classList.remove('hidden');
-    document.querySelector('#conclusion aside').classList.add('revealed');
+    document.querySelector('#passage-proportion aside').classList.add('revealed');
 }
 
 var explanationRevealed = false;
@@ -137,15 +138,12 @@ var distanceChartRevealed = false;
 var passageRendered = false;
 document.addEventListener('scroll', scrollTriggers);
 function scrollTriggers() {
-    let middlePage = window.pageYOffset + window.innerHeight / 2;
+    let middlePage = window.innerHeight / 2;
 
-    if (!explanationRevealed && middlePage >= explanation.offsetTop) {
+    if (!explanationRevealed && middlePage >= explanation.getBoundingClientRect().top) {
         explanation.classList.add('revealed');
     }
-    // if (!distanceChartRevealed && middlePage >= distanceChart.offsetTop) {
-
-    // }
-    if (!passageRendered && middlePage >= passage.offsetTop) {
+    if (!passageRendered && middlePage >= passage.getBoundingClientRect().top) {
         renderPassage();
         passageRendered = true;
     }

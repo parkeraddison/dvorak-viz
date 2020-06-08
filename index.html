@@ -27,15 +27,17 @@
     <body>
         <div id="main-wrapper">
             <main>
-                <hgroup>
-                    <h1>Dvorak's keyboard</h1>
-                    <h2>
-                        Absurd or efficient? A visual comparison between the
-                        QWERTY and Dvorak keyboard layouts
-                    </h2>
-                </hgroup>
+                <div id="landing">
+                    <hgroup id="title">
+                        <h1>Dvorak's keyboard</h1>
+                        <h2>
+                            Absurd or efficient? A visual comparison between the
+                            <span class="highlight-qwerty">QWERTY</span> and
+                            <span class="highlight-dvorak">Dvorak</span>
+                            keyboard layouts
+                        </h2>
+                    </hgroup>
 
-                <section id="keyboards">
                     <form action="" id="text-input">
                         <textarea
                             id="input"
@@ -44,6 +46,8 @@
                             placeholder="Type something to compare efficiency..."
                         ></textarea>
                     </form>
+                </div>
+                <section id="keyboards">
                     <a id="typerace"></a>
                     <div id="keyboards">
                         <div id="qwerty-written">
@@ -68,7 +72,10 @@
                     </div>
                     <article class="qwerty-hidden" id="explanation">
                         <p>
-                            The QWERTY keyboard was designed for the first commercial typewriter. The layout originally positioned common pairs of letters far apart so that their mechanical levers wouldn't jam.<!--<sup id="fnref-1"><a href="#fn-1">1</a></sup>-->
+                            The QWERTY keyboard was designed for the first
+                            commercial typewriter. The layout originally
+                            positioned common pairs of letters far apart so that
+                            their mechanical levers wouldn't jam.<!--<sup id="fnref-1"><a href="#fn-1">1</a></sup>-->
                             <!-- https://en.wikipedia.org/wiki/QWERTY#History -->
                         </p>
                     </article>
@@ -78,8 +85,11 @@
                         <p class="qwerty-hidden">
                             In the passage above, your fingers would have
                             travelled
-                            <span id="distance-percent"></span> if you
-                            were using a Dvorak keyboard.
+                            <span
+                                id="distance-percent"
+                                class="highlight-dvorak"
+                            ></span>
+                            if you were using a Dvorak keyboard.
                         </p>
                         <p class="note">
                             <a href="">
@@ -95,15 +105,26 @@
                 <section id="row-usage">
                     <article>
                         <p>
-                            The Dvorak keyboard was designed over the course of more than a decade of research on language and typing habits.  It endeavors to place common keys in easy-to-reach positions to maximize speed and comfort.
+                            The Dvorak keyboard was designed over the course of
+                            more than a decade of research on language and
+                            typing habits. It endeavors to place common keys in
+                            easy-to-reach positions to maximize speed and
+                            comfort.
                         </p>
                         <p>
-                            Letters on the home row (where your fingers rest) are the easiest and quickest to type, whereas the bottom row often requires more time and awkward movements.
+                            Common letters are placed on the home row and rare
+                            letters are placed on the bottom row. This makes
+                            typing easier, quicker, and less awkward.
                         </p>
                     </article>
                     <aside>
                         <p>
-                            
+                            The <b>bigger</b> the <b>home</b> row percentage,
+                            the better.
+                        </p>
+                        <p>
+                            The <b>smaller</b> the <b>bottom</b> row percentage,
+                            the better.
                         </p>
                     </aside>
                     <figure>
@@ -113,67 +134,85 @@
                 <section id="hand-alternating">
                     <article>
                         <p>
-                            But also [hand alternating important for quick
-                            typing, since it allows getting ready]
+                            It's also important that a keyboard forces you to
+                            alternate hands. This allows each hand to prepare
+                            for the next keystroke, and lessens the strain on an
+                            individual hand.
                         </p>
                     </article>
                     <aside>
                         <p>
                             Tip-tap &mdash; alternating keystrokes are also
-                            desirable for typing with your thumbs on a phone!
+                            desirable when typing with your thumbs on a phone!
                         </p>
                     </aside>
                     <figure>
+                        <div id="hand-chart"></div>
                         <!-- Bar chart - percentage of consecutive keystrokes that
                         alternated hands -->
                     </figure>
                 </section>
-                <section id="conclusion">
+                <section id="passage-proportion">
                     <article>
                         <p>
                             So why does no one use the Dvorak layout? Precisely
                             <em>because</em> no one uses the Dvorak layout.
                         </p>
                         <p>
-                            To illustrate this point, consider the following
-                            excerpt from Jared Diamond's
+                            In the following excerpt from Jared Diamond's
                             <a
                                 href="https://www.discovermagazine.com/technology/the-curse-of-qwerty"
                                 >"The Curse of QWERTY"</a
-                            >
-                            &mdash; the proportion of
-                            <span class="highlight"
+                            >, the proportion of
+                            <span class="highlight-dvorak"
                                 >salmon colored characters</span
                             >
-                            below roughly matches the estimated proportion of
-                            Dvorak users in the Latin-alphabet keyboard population.
+                            roughly matches the estimated proportion of Dvorak
+                            users in English-speaking countries.
                         </p>
                     </article>
                     <div id="dvorak-users">
                         <blockquote id="passage"></blockquote>
                         <aside class="hidden">
                             <p>
-                                [Might be nice to move the following paragraphs
-                                into an article, and have this aside mention and
-                                source a paper explaining the economic momentum
-                                or path dependence]
-                            </p>
-                            <p>
                                 Indeed, Dvorak's layout never got the necessary
                                 momentum to replace the status quo.
                             </p>
                             <p>
-                                By now, less than 0.1% of the U.S. population is
-                                estimated to use the Dvorak layout.
+                                By now, less than
+                                <span class="highlight-dvorak">0.1%</span> of
+                                the U.S. population is estimated to use the
+                                Dvorak layout.
                             </p>
                         </aside>
-                        <!-- <div id="legend">
-                            <p>
-                                <span class="qwerty">QWERTY users</span>
-                                <span class="dvorak">Dvorak users</span>
-                            </p>
-                        </div> -->
                     </div>
+                </section>
+                <section id="conclusion">
+                    <article>
+                        <aside>
+                            <p>
+                                <em>Did you know?</em>
+                            </p>
+                            <p>I could have saved at least <span id="time-savings-coder" class="highlight-dvorak"></span> minutes of my life if I had written all this source code with a Dvorak keyboard.</p>
+                            <p>And <em>you</em> could have saved at least <span id="time-savings-user"></span> seconds...</p>
+                            <p>Was it worth it?</p>
+                        </aside>
+                        <p>
+                            Studies have shown that despite the apparent
+                            superiority of the Dvorak layout,
+                            <a href="">economic momentum</a> largely prevented
+                            the switch from happening. Economics classes
+                            frequently use the Dvorak layout as an argument that
+                            free markets do <em>not</em> always settle on the
+                            'best' option.
+                        </p>
+                        <p>
+                            RIP Dvorak. Perhaps one day the human race will deem
+                            it worthwhile to change how we lay out our
+                            keyboards... though that could very well be the day
+                            we stop using keyboards entirely.
+                        </p>
+                    </article>
                 </section>
                 <footer>
                     <p>
