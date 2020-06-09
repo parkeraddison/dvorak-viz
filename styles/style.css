@@ -108,7 +108,7 @@ p {
     font-size: 20px;
 }
 a {
-    color: var(--text-color);
+    color: inherit;
     text-decoration: none;
     border-bottom: 1px solid gainsboro;
 }
@@ -151,9 +151,8 @@ aside p {
     color: var(--text-color-light);
 }
 
-aside p.note a {
+aside p.note {
     font-size: 14px;
-    color: var(--text-color-light);
 }
 
 [id^='fnref'] a {
@@ -297,6 +296,19 @@ div#keyboards [id$='-written']::after {
     background-color: #cccccc88;
 }
 
+#passage .highlight-dvorak {
+    position: relative;
+}
+
+#passage .highlight-dvorak:hover::after {
+    content: '< 0.01%';
+    position: absolute;
+    top: 1.2em;
+    width: 5em;
+    left: -2.5em;
+    text-align: center;
+}
+
 #passage-proportion aside p {
     position: relative;
     top: -20em;
@@ -360,11 +372,16 @@ form #input {
 
 .highlight-qwerty {
     color: var(--qwerty-color);
+    color: cornflowerblue; /* The lightskyblue was too light at small scale */
+    color: rgb(114, 159, 241);
     /* box-shadow: inset 0 -0.1em 0 0 var(--qwerty-color); */
     background-color: #87cefa22;
 }
 .highlight-dvorak {
     color: var(--dvorak-color);
+    color: salmon;
+    /* color: tomato;
+    color: lightcoral; */
     /* box-shadow: inset 0 -0.1em 0 0 var(--dvorak-color); */
     background-color: #E9967A22;
 }
