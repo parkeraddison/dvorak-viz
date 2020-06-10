@@ -346,9 +346,10 @@ async function renderPresses(keyboard, word, timesteps) {
 
     // This is a tiny bit broken since we're not looking at symbols, but that's
     // an edge case.
-    let letters = word
+    let clean = word
         .toLowerCase()
         .replace(/[^a-z0-9]/g, '')
+    let letters = clean
         .split('')
         .filter(function (item, i, ar) {
             return ar.indexOf(item) === i;
@@ -357,7 +358,7 @@ async function renderPresses(keyboard, word, timesteps) {
     let letterCounts = [];
     for (const letter of letters) {
         let re = new RegExp(`${letter}`, 'g');
-        letterCounts.push(word.match(re).length);
+        letterCounts.push(clean.match(re).length);
     }
     console.log(`${Math.max(...letterCounts)}`);
     let heatDelta = 1 / Math.max(...letterCounts);
