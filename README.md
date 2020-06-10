@@ -14,8 +14,9 @@ The efficiency comparison is most useful for normal sentences, and the visualiza
 
 Here are a few examples that you can use (or to give you inspiration):
 
--   You know what, yesterday I was just minding my own business, walking down the street, when an incredible humming bird whizzed past my shoulder. Viridian wings a blur, with an unbelievably vibrant blue underbelly -- it made me appreciate the moment.
--   Okay here is a sentence that I can type because, well, I'm curious to see the difference between these two keyboard layouts! Aren't you?
+> You know what, yesterday I was just minding my own business, walking down the street, when an incredible humming bird whizzed past my shoulder. Viridian wings a blur, with an unbelievably vibrant blue underbelly -- it made me appreciate the moment.
+
+> Okay here is a sentence that I can type because, well, I'm curious to see the difference between these two keyboard layouts! Aren't you?
 
 The comparison tool supports longer passages, though the visualization of the keyboards typing may seem a bit rushed! If you want, you could paste in the first chapter of "The Enchanted Typewriter" by John Kendrick Bangs.
 
@@ -359,7 +360,7 @@ Text Sample
 
 ### TODO
 
--   paths on keyboard (abstract)
+-   draw finger movement paths on the keyboards, and/or heatmaps
 -   modify distance calculation:
     -   After typing a key, the finger should return back to the home positions
         after a letter or two passes without them being called.
