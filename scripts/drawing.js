@@ -2,7 +2,7 @@ let distanceChart;
 let rowChart;
 let handChart;
 
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('load', function () {
     Highcharts.setOptions({
         colors: ['lightskyblue', 'darksalmon'],
         credits: {
