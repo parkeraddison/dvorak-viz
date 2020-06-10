@@ -442,7 +442,11 @@ form #input {
     bottom: 0;
     left: 0;
     right: 0;
-    background: radial-gradient(circle at center, mediumvioletred 0, #fff0 70%);
+    background: radial-gradient(circle at center, var(--dvorak-color) 0, #fff0 70%);
     opacity: var(--heat);
     border-radius: 50em;
+}
+
+.simple-keyboard.qwerty-keyboard .hg-button::after {
+    background: radial-gradient(circle at center, var(--qwerty-color) 0, #fff0 70%);
 }
