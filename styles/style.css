@@ -49,8 +49,8 @@
 }
 
 /* Highlight the home keys */
-.simple-keyboard .hg-row:nth-of-type(3) .hg-button:nth-of-type(5)::after,
-.simple-keyboard .hg-row:nth-of-type(3) .hg-button:nth-of-type(8)::after {
+.simple-keyboard .hg-row:nth-of-type(3) .hg-button:nth-of-type(5)::before,
+.simple-keyboard .hg-row:nth-of-type(3) .hg-button:nth-of-type(8)::before {
     position: absolute;
     content: '';
     display: block;
@@ -426,4 +426,23 @@ form #input {
     #keyboards aside {
         transform: none;
     }
+}
+
+
+/* === HEATMAP ============================================================== */
+
+.simple-keyboard .hg-button {
+    --heat: 0;
+}
+
+.simple-keyboard .hg-button::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: radial-gradient(circle at center, mediumvioletred 0, #fff0 70%);
+    opacity: var(--heat);
+    border-radius: 50em;
 }

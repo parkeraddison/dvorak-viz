@@ -288,12 +288,16 @@ async function drawDistanceChart(keyboards, text, distances) {
     });
 }
 
-async function pressButton(keyboard, character, resttime) {
+async function pressButton(keyboard, character, resttime, heatDelta) {
     try {
         const keyButton = keyboard.getButtonElement(character);
         keyButton.classList.add('hg-activeButton');
         await sleep(resttime);
         keyButton.classList.remove('hg-activeButton');
+        let oldHeat = parseFloat(keyButton.style.getPropertyValue('--heat'));
+        let newHeat = oldHeat ? oldHeat + heatDelta : heatDelta;
+        keyButton.style.setProperty('--heat', newHeat);
+        // console.log(`${character} now has heat of ${newHeat}`);
     } catch {}
 }
 function sleep(ms) {
@@ -309,9 +313,8 @@ function writeOutput(element, character) {
     }
 }
 async function renderPresses(keyboard, word, timesteps) {
-
     let layoutName = keyboard.options.layoutName;
-    let layoutkeys = {...kbkeys[layoutName], ...kbkeys[layoutName + 'Shift']};
+    let layoutkeys = { ...kbkeys[layoutName], ...kbkeys[layoutName + 'Shift'] };
     let layoutmatrix = kbmatrix[layoutName];
 
     let timescale = TIMESCALE;
@@ -340,6 +343,30 @@ async function renderPresses(keyboard, word, timesteps) {
 
     let currChar;
     let currKey;
+
+    // This is a tiny bit broken since we're not looking at symbols, but that's
+    // an edge case.
+    let letters = word
+        .toLowerCase()
+        .replace(/[^a-z0-9]/g, '')
+        .split('')
+        .filter(function (item, i, ar) {
+            return ar.indexOf(item) === i;
+        })
+        .join('');
+    let letterCounts = [];
+    for (const letter of letters) {
+        let re = new RegExp(`${letter}`, 'g');
+        letterCounts.push(word.match(re).length);
+    }
+    console.log(`${Math.max(...letterCounts)}`);
+    let heatDelta = 1 / Math.max(...letterCounts);
+    console.log(heatDelta);
+    // Clear all existing heat styles before we begin
+    for (const character in keyboard.buttonElements) {
+        keyboard.buttonElements[character][0].style.setProperty('--heat', 0);
+    }
+
     written.innerHTML = '';
     for (let idx = 0; idx < word.length; idx++) {
         currChar = word[idx];
@@ -350,7 +377,7 @@ async function renderPresses(keyboard, word, timesteps) {
         writeOutput(written, currChar);
 
         // Visually 'type' on the keyboard
-        pressButton(keyboard, keyChar.character, resttime);
+        pressButton(keyboard, keyChar.character, resttime, heatDelta);
 
         await sleep(timesteps[idx] * timescale);
     }
