@@ -209,7 +209,8 @@ code {
     font-family: var(--monospace);
 }
 
-[class$='hidden'] {
+.hidden,
+[class$="hidden"] {
     opacity: 0;
     transition: opacity 0.3s;
 }
@@ -310,7 +311,7 @@ code {
 }
 
 #passage .highlight-dvorak:hover::after {
-    content: '< 0.01%';
+    content: '< 0.1%';
     position: absolute;
     top: 1.2em;
     width: 5em;

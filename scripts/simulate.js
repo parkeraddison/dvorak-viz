@@ -20,7 +20,7 @@ const RENDER = true;
 
 // For now, we're ignoring some characters.
 function parseWord(word) {
-    let re = new RegExp(`[^${ALLOWEDCHARACTERS}]`, 'g');
+    let re = new RegExp(`[^${ALLOWEDCHARACTERS}]`, 'gi');
 
     cleaned = word
         // .toLowerCase()

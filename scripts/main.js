@@ -24,7 +24,6 @@ function writeScore(timeElem, distElem, text, output) {
     }
 }
 
-
 let totalUserTimeSavings = 0;
 let timeSavingsUser = document.getElementById('time-savings-user');
 async function typerace(text) {
@@ -36,7 +35,8 @@ async function typerace(text) {
     let qwOutput = run(qwKeyboard, text, DEBUG);
     let dvOutput = run(dvKeyboard, text, DEBUG);
 
-    totalUserTimeSavings += ((qwOutput.cost - dvOutput.cost) * TIMESCALE / 1000)
+    totalUserTimeSavings +=
+        ((qwOutput.cost - dvOutput.cost) * TIMESCALE) / 1000;
 
     console.log(qwOutput);
     console.log(dvOutput);
@@ -82,14 +82,12 @@ async function typerace(text) {
 
     drawHandChart(text, [qwOutput.alternating, dvOutput.alternating]);
 
-    timeSavingsUser.innerHTML = Math.round(totalUserTimeSavings) + 's'
+    timeSavingsUser.innerHTML = Math.round(totalUserTimeSavings) + 's';
 }
 
 const passage = document.getElementById('passage-written');
 async function renderPassage() {
-    let text = `Dvorak typists began to sweep typing speed contests two years later, and they have held most typing records ever since. A large-scale comparative test of several thousand children, carried out in the Tacoma schools in the 1930s, showed that children learned Dvorak typing in one- third the time required to attain the same standard with QWERTY typing. When the U.S. Navy faced a shortage of trained typists in World War II, it experimented with retraining QWERTY typists to use Dvorak. The retraining quickly enabled the Navy’s test typists to increase their typing accuracy by 68 percent and their speed by 74 percent. Faced with these convincing results, the Navy ordered thousands of Dvorak typewriters.
-
-        They never got them. The Treasury Department vetoed the Navy purchase order, probably for the same reason that has blocked acceptance of all improved, non-QWERTY keyboards for the last 80 years: the commitment to QWERTY of tens of millions of typists, teachers, salespeople, office managers, and manufacturers. Even when daisy wheels and computer printers replaced type bars, forever banishing the jamming problem that had originally motivated QWERTY, manufacturers of the efficient new technologies carried on the inefficient old keyboard. August Dvorak died in 1975, a bitter man: I’m tired of trying to do something worthwhile for the human race, he complained. They simply don’t want to change!`;
+    let text = `Dvorak typists began to sweep typing speed contests two years later, and they have held most typing records ever since. A large-scale comparative test of several thousand children, carried out in the Tacoma schools in the 1930s, showed that children learned Dvorak typing in one- third the time required to attain the same standard with QWERTY typing. When the U.S. Navy faced a shortage of trained typists in World War II, it experimented with retraining QWERTY typists to use Dvorak. The retraining quickly enabled the Navy’s test typists to increase their typing accuracy by 68 percent and their speed by 74 percent. Faced with these convincing results, the Navy ordered thousands of Dvorak typewriters.\n\nThey never got them. The Treasury Department vetoed the Navy purchase order, probably for the same reason that has blocked acceptance of all improved, non-QWERTY keyboards for the last 80 years: the commitment to QWERTY of tens of millions of typists, teachers, salespeople, office managers, and manufacturers. Even when daisy wheels and computer printers replaced type bars, forever banishing the jamming problem that had originally motivated QWERTY, manufacturers of the efficient new technologies carried on the inefficient old keyboard. August Dvorak died in 1975, a bitter man: I’m tired of trying to do something worthwhile for the human race, he complained. They simply don’t want to change!`;
 
     let textOutput = await run(qwKeyboard, text, false);
 
@@ -97,7 +95,7 @@ async function renderPassage() {
     let endIdx = text.length;
     let startIdx = text.length - numToHighlight;
 
-    let timescale = 0.6;
+    let timescale = 0.5;
     let prevChar;
     let currChar;
     passage.innerHTML = '';
@@ -112,13 +110,13 @@ async function renderPassage() {
         prevChar = currChar;
 
         // Make timescale longer at the end
-        if (idx == startIdx - 1) {
-            timescale *= 30;
+        if (idx >= startIdx - 1) {
+            timescale = 20;
         }
         let timing = timescale;
         switch (currChar) {
             case '.':
-                timing *= 10;
+                timing *= 7;
                 break;
             case ',':
                 timing *= 2;
@@ -130,12 +128,12 @@ async function renderPassage() {
                 break;
         }
 
-        await sleep(textOutput.timesteps[idx] * timing);
+        let sleepTime = textOutput.timesteps[idx] ? textOutput.timesteps[idx] : 50;
+
+        await sleep(sleepTime  * timing);
     }
 
-    document
-        .querySelector('#passage-proportion aside')
-        .classList.add('revealed');
+    document.querySelector('#dvorak-users aside').classList.add('revealed');
 }
 
 var explanationRevealed = false;
