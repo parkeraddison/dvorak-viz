@@ -9,12 +9,11 @@
         <link rel="stylesheet" href="hodgef-simple-keyboard/index.css" />
         <script src="hodgef-simple-keyboard/index.js"></script>
 
-        <!-- Load D3.js for drawing -->
-        <script src="d3js/d3.min.js"></script>
-        <script src="https://code.highcharts.com/highcharts.js"></script>
+        <!-- Load Highcharts for drawing -->
+        <script defer src="https://code.highcharts.com/highcharts.js"></script>
 
         <!-- Load smartquotes converter -->
-        <script src="smartquotes/smartquotes.js"></script>
+        <script defer src="smartquotes/smartquotes.js"></script>
 
         <style>
             @import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
@@ -43,7 +42,7 @@
                                 <a
                                     target="_blank"
                                     href="https://github.com/parkeraddison/dvorak-viz#what-should-i-type"
-                                    >I don't know what to type (?)</a
+                                    >I don't know what to type</a
                                 >
                             </p>
                         </aside>
@@ -51,36 +50,62 @@
                             id="input"
                             name="input"
                             type="text"
-                            placeholder="Type something to compare efficiency..."
+                            placeholder="Type a sentence to compare efficiency..."
                         ></textarea>
                     </form>
                 </div>
                 <section id="keyboards">
                     <a id="typerace"></a>
-                    <div id="keyboards">
+
+                    <div class="keyboard-container">
                         <div id="qwerty-written">
                             <p id="text">my layout is <u>QWERTY</u></p>
                         </div>
-                        <aside class="qwerty-hidden">
-                            <p id="qwerty-score"></p>
-                            <p class="note">
-                                <a
-                                    target="_blank"
-                                    href="https://github.com/parkeraddison/dvorak-viz#how-was-typing-speed-calibrated"
-                                >
-                                    How was <dfn>typing speed</dfn> calibrated?
-                                </a>
-                            </p>
-                        </aside>
                         <div class="simple-keyboard qwerty-keyboard"></div>
+                    </div>
+                    <aside class="qwerty-hidden">
+                        <p>
+                            Time:
+                            <span id="qwerty-time" class="highlight-qwerty"
+                                >...</span
+                            >
+                        </p>
+                        <p>
+                            Travel Distance:
+                            <span id="qwerty-distance" class="highlight-qwerty"
+                                >...</span
+                            >
+                        </p>
+                        <p class="note">
+                            <a
+                                target="_blank"
+                                href="https://github.com/parkeraddison/dvorak-viz#how-was-typing-speed-calibrated"
+                            >
+                                How was <dfn>typing speed</dfn> calibrated?
+                            </a>
+                        </p>
+                    </aside>
+                    <div class="keyboard-container">
                         <div id="dvorak-written">
                             <p id="text">i'm the <u>Dvorak</u> layout</p>
                         </div>
-                        <aside>
-                            <p class="dvorak-hidden" id="dvorak-score"></p>
-                        </aside>
                         <div class="simple-keyboard dvorak-keyboard"></div>
                     </div>
+                    <aside class="dvorak-hidden">
+                        <p>
+                            Time:
+                            <span id="dvorak-time" class="highlight-dvorak"
+                                >...</span
+                            >
+                        </p>
+                        <p>
+                            Travel Distance:
+                            <span id="dvorak-distance" class="highlight-dvorak"
+                                >...</span
+                            >
+                        </p>
+                    </aside>
+
                     <article class="qwerty-hidden" id="explanation">
                         <p>
                             The QWERTY keyboard was designed for the first
@@ -126,9 +151,9 @@
                             comfort.
                         </p>
                         <p>
-                            Common letters are placed on the home row and rare
-                            letters are placed on the bottom row. This makes
-                            typing easier, quicker, and less awkward.
+                            Common letters should be placed on the home row and
+                            rare letters on the bottom row. This makes typing
+                            easier, quicker, and less awkward.
                         </p>
                     </article>
                     <aside>
@@ -186,8 +211,43 @@
                         </p>
                     </article>
                     <div id="dvorak-users">
-                        <blockquote id="passage"></blockquote>
-                        <aside class="hidden">
+                        <blockquote id="passage">
+                            <div id="passage-written"></div>
+                            <div id="passage-invisible">
+                                Dvorak typists began to sweep typing speed
+                                contests two years later, and they have held
+                                most typing records ever since. A large-scale
+                                comparative test of several thousand children,
+                                carried out in the Tacoma schools in the 1930s,
+                                showed that children learned Dvorak typing in
+                                one- third the time required to attain the same
+                                standard with QWERTY typing. When the U.S. Navy
+                                faced a shortage of trained typists in World War
+                                II, it experimented with retraining QWERTY
+                                typists to use Dvorak. The retraining quickly
+                                enabled the Navy’s test typists to increase
+                                their typing accuracy by 68 percent and their
+                                speed by 74 percent. Faced with these convincing
+                                results, the Navy ordered thousands of Dvorak
+                                typewriters.<br /><br />
+                                They never got them. The Treasury Department
+                                vetoed the Navy purchase order, probably for the
+                                same reason that has blocked acceptance of all
+                                improved, non-QWERTY keyboards for the last 80
+                                years: the commitment to QWERTY of tens of
+                                millions of typists, teachers, salespeople,
+                                office managers, and manufacturers. Even when
+                                daisy wheels and computer printers replaced type
+                                bars, forever banishing the jamming problem that
+                                had originally motivated QWERTY, manufacturers
+                                of the efficient new technologies carried on the
+                                inefficient old keyboard. August Dvorak died in
+                                1975, a bitter man: I’m tired of trying to do
+                                something worthwhile for the human race, he
+                                complained. They simply don’t want to change!
+                            </div>
+                        </blockquote>
+                        <aside class="hidden after">
                             <p>
                                 Indeed, Dvorak's layout never got the necessary
                                 momentum to replace the status quo.
@@ -203,7 +263,25 @@
                 </section>
                 <section id="conclusion">
                     <article>
-                        <aside>
+                        <p>
+                            Studies have shown that despite the apparent
+                            superiority of the Dvorak layout,
+                            <a href="https://daily.jstor.org/the-qwerty-truth/"
+                                >economic momentum</a
+                            >
+                            largely prevented the switch from happening.
+                            Economics classes frequently use the Dvorak layout
+                            as an argument that free markets do
+                            <em>not</em> always settle on the 'best' option.
+                        </p>
+                        <p>
+                            RIP Dvorak. Perhaps one day the human race will deem
+                            it worthwhile to change how we lay out our
+                            keyboards... though that could very well be the day
+                            we stop using keyboards entirely.
+                        </p>
+                        <br class="extra-space" />
+                        <aside class="after">
                             <p>
                                 <em>Did you know?</em>
                             </p>
@@ -227,23 +305,6 @@
                             </p>
                             <p>Was it worth it?</p>
                         </aside>
-                        <p>
-                            Studies have shown that despite the apparent
-                            superiority of the Dvorak layout,
-                            <a href="https://daily.jstor.org/the-qwerty-truth/"
-                                >economic momentum</a
-                            >
-                            largely prevented the switch from happening.
-                            Economics classes frequently use the Dvorak layout
-                            as an argument that free markets do
-                            <em>not</em> always settle on the 'best' option.
-                        </p>
-                        <p>
-                            RIP Dvorak. Perhaps one day the human race will deem
-                            it worthwhile to change how we lay out our
-                            keyboards... though that could very well be the day
-                            we stop using keyboards entirely.
-                        </p>
                     </article>
                 </section>
                 <footer>

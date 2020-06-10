@@ -1,7 +1,10 @@
 const form = document.forms[0];
 // const button = document.querySelector('button');
 const written = document.querySelectorAll('[id$="-written"]');
-const score = document.querySelectorAll('[id$="-score"]');
+const [qwertyTime, dvorakTime] = document.querySelectorAll('[id$="-time"]');
+const [qwertyDistance, dvorakDistance] = document.querySelectorAll(
+    '[id$="-distance"]'
+);
 const explanation = document.querySelector('#keyboards #explanation');
 
 form.addEventListener('submit', (event) => {
@@ -9,23 +12,16 @@ form.addEventListener('submit', (event) => {
     typerace(form.input.value);
 });
 
-function writeScore(element, text, output) {
+function writeScore(timeElem, distElem, text, output) {
     if (output) {
         let time = ((output.cost * TIMESCALE) / 1000).toFixed(2);
-        element.innerHTML = `
-        Time: ${time}s
-        <small>(${Math.round(((text.length / 5) * 60) / time)} WPM)</small>
-        <br />
-        Travel Distance: ${(output.distance / 1000).toFixed(2)}m
-        `;
+        timeElem.innerHTML = `${time}s
+        <small>(${Math.round(((text.length / 5) * 60) / time)} WPM)</small>`;
+        distElem.innerHTML = `${(output.distance / 1000).toFixed(2)}m`;
     } else {
-        element.innerHTML = `
-        Time: ...
-        <br />
-        Travel Distance: ...
-        `;
+        timeElem.innerHTML = '...';
+        distElem.innerHTML = '...';
     }
-
 }
 
 async function typerace(text) {
@@ -40,12 +36,12 @@ async function typerace(text) {
     console.log(qwOutput);
     console.log(dvOutput);
 
-    writeScore(score[0], null, null);
-    writeScore(score[1], null, null);
+    writeScore(qwertyTime, qwertyDistance, null, null);
+    writeScore(dvorakTime, dvorakDistance, null, null);
 
     renderPresses(qwKeyboard, qwOutput.text, qwOutput.timesteps).then(
         function () {
-            writeScore(score[0], text, qwOutput);
+            writeScore(qwertyTime, qwertyDistance, text, qwOutput);
             Array.from(
                 document.getElementsByClassName('qwerty-hidden')
             ).forEach((element) => {
@@ -55,7 +51,7 @@ async function typerace(text) {
     );
     renderPresses(dvKeyboard, dvOutput.text, dvOutput.timesteps).then(
         function () {
-            writeScore(score[1], text, dvOutput);
+            writeScore(dvorakTime, dvorakDistance, text, dvOutput);
             Array.from(
                 document.getElementsByClassName('dvorak-hidden')
             ).forEach((element) => {
@@ -69,8 +65,8 @@ async function typerace(text) {
     );
     document.getElementById('distance-percent').innerText =
         distancePercent >= 0
-        ? `${distancePercent}% less`
-        : `${-distancePercent}% more`;
+            ? `${distancePercent}% less`
+            : `${-distancePercent}% more`;
 
     drawDistanceChart([qwKeyboard, dvKeyboard], text, [
         qwOutput.distances,
@@ -82,7 +78,7 @@ async function typerace(text) {
     drawHandChart(text, [qwOutput.alternating, dvOutput.alternating]);
 }
 
-const passage = document.getElementById('passage');
+const passage = document.getElementById('passage-written');
 async function renderPassage() {
     let text = `Dvorak typists began to sweep typing speed contests two years later, and they have held most typing records ever since. A large-scale comparative test of several thousand children, carried out in the Tacoma schools in the 1930s, showed that children learned Dvorak typing in one- third the time required to attain the same standard with QWERTY typing. When the U.S. Navy faced a shortage of trained typists in World War II, it experimented with retraining QWERTY typists to use Dvorak. The retraining quickly enabled the Navy’s test typists to increase their typing accuracy by 68 percent and their speed by 74 percent. Faced with these convincing results, the Navy ordered thousands of Dvorak typewriters.
 
@@ -130,7 +126,9 @@ async function renderPassage() {
         await sleep(textOutput.timesteps[idx] * timing);
     }
 
-    document.querySelector('#passage-proportion aside').classList.add('revealed');
+    document
+        .querySelector('#passage-proportion aside')
+        .classList.add('revealed');
 }
 
 var explanationRevealed = false;
@@ -140,7 +138,10 @@ document.addEventListener('scroll', scrollTriggers);
 function scrollTriggers() {
     let middlePage = window.innerHeight / 2;
 
-    if (!explanationRevealed && middlePage >= explanation.getBoundingClientRect().top) {
+    if (
+        !explanationRevealed &&
+        middlePage >= explanation.getBoundingClientRect().top
+    ) {
         explanation.classList.add('revealed');
     }
     if (!passageRendered && middlePage >= passage.getBoundingClientRect().top) {

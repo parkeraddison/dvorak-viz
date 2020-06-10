@@ -149,10 +149,15 @@ aside {
 aside p {
     font-size: 18px;
     color: var(--text-color-light);
+    margin-top: 0;
 }
 
 aside p.note {
     font-size: 14px;
+}
+
+aside.after {
+    transform: translateY(-100%);
 }
 
 [id^='fnref'] a {
@@ -213,10 +218,13 @@ code {
     transition: opacity 0.3s;
 }
 
+.keyboard-container {
+    transform: scale(var(--keyboard-scale), var(--keyboard-scale));
+}
+
 .simple-keyboard {
     width: var(--keyboard-width);
     margin: 0 auto 2em;
-    transform: scale(var(--keyboard-scale), var(--keyboard-scale));
 }
 .qwerty-keyboard {
     --button-highlight: var(--qwerty-color);
@@ -225,12 +233,7 @@ code {
     --button-highlight: var(--dvorak-color);
 }
 
-div#keyboards {
-    position: relative;
-    margin-bottom: 8em;
-}
-
-div#keyboards [id$='-written'] {
+#keyboards [id$='-written'] {
     font-family: var(--typewriter);
     margin: auto;
     height: 3.5em;
@@ -243,25 +246,28 @@ div#keyboards [id$='-written'] {
     position: relative;
 }
 
-div#keyboards [id$='-written'] p {
+#keyboards [id$='-written'] p {
     margin: 0;
     word-wrap: break-word;
 }
 
-div#keyboards [id$='-written']::after {
+/* A gradient to fade out the text at the top of the parchment */
+#keyboards [id$='-written']::after {
     content: '';
     position: absolute;
     height: 100%;
     width: 100%;
     left: 0;
     top: 0;
-    /* background: blue; */
-    /* background: linear-gradient(top, rgba(0,0,0,0) 0%, var(--paper-color) 100%); */
     background-image: -moz-linear-gradient(
         bottom,
         rgba(0, 0, 0, 0) 60%,
         var(--paper-color) 100%
     );
+}
+
+#keyboards aside {
+    transform: translateY(-240px);
 }
 
 #travel-distance .tooltip-characters {
@@ -274,15 +280,18 @@ div#keyboards [id$='-written']::after {
     margin: 1.5em;
     font-family: var(--typewriter);
     font-size: 24px;
-    color: var(--gray);
+    color: #bbb;
     line-height: 1;
     letter-spacing: -1px;
-    height: 28em; /* Yikes.  Need to change if page width gets smaller. */
     position: relative;
-    /* Just had an idea:
-    How about I have a version of the passage that isn't viewable in order to
-    set the height of a container.  Then I just use this one visually.
-    */
+}
+
+#passage #passage-written {
+    position: absolute;
+}
+
+#passage #passage-invisible {
+    visibility: hidden;
 }
 
 #passage::after {
@@ -293,7 +302,7 @@ div#keyboards [id$='-written']::after {
     height: 100%;
     width: 4px;
     display: block;
-    background-color: #cccccc88;
+    background-color: #bbb8;
 }
 
 #passage .highlight-dvorak {
@@ -309,20 +318,9 @@ div#keyboards [id$='-written']::after {
     text-align: center;
 }
 
-#passage-proportion aside p {
-    position: relative;
-    top: -20em;
+#passage-proportion aside {
+    transform: translateY(calc(-100% - 1em));
 }
-
-/* Manual border for column chart */
-/* .highcharts-series rect:nth-of-type(1) {
-    stroke: var(--qwerty-color);
-    stroke-width: 4;
-}
-.highcharts-series rect:nth-of-type(2) {
-    stroke: var(--dvorak-color);
-    stroke-width: 4;
-} */
 
 /* LANDING */
 #landing {
@@ -384,4 +382,46 @@ form #input {
     color: lightcoral; */
     /* box-shadow: inset 0 -0.1em 0 0 var(--dvorak-color); */
     background-color: #E9967A22;
+}
+
+
+/* === NARROW STYLING ======================================================= */
+
+@media (max-width: 650px) {
+
+    main {
+        margin: 0.5em;
+    }
+    
+    aside {
+        position: static;
+        width: unset;
+        margin-bottom: 2em;
+        border: 4px double gainsboro;
+        border-style: double none;
+        padding-top: 0.5em;
+    }
+
+    aside.after {
+        transform: none !important;
+    }
+
+    #landing aside {
+        float: right;
+        border: none;
+    }
+
+    .keyboard-container,
+    .keyboard-container p {
+        font-size: 2vh;
+    }
+    
+    .simple-keyboard .hg-button {
+        font-size: 1.5vh;
+        height: 4vh;
+    }
+
+    #keyboards aside {
+        transform: none;
+    }
 }
