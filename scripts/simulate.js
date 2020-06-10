@@ -12,7 +12,7 @@ const FIXEDCOST = 18;
 // For use in rendering
 const TIMESCALE = 5.25; // Calibrated to roughly 70 WPM on QWERTY
 const RESTTIME = 50;
-const ALLOWEDCHARACTERS = `1234567890-=~!@#$%^&*()_+qwertyuiop{}\\[\\]asdfghjkl;':"zxcvbnm,\\.\\/<>? `;
+const ALLOWEDCHARACTERS = `1234567890\\-=~!@#$%^&*()_+qwertyuiop{}\\[\\]asdfghjkl;':"zxcvbnm,\\.\\/<>? `;
 const DEBUG = false;
 const RENDER = true;
 
