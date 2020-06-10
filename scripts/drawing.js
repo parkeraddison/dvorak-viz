@@ -2,19 +2,21 @@ let distanceChart;
 let rowChart;
 let handChart;
 
-Highcharts.setOptions({
-    colors: ['lightskyblue', 'darksalmon'],
-    credits: {
-        enabled: false,
-    },
-    title: {
-        style: {
-            color: 'var(--text-color-light)',
-            fontWeight: 'bold',
-            fontSize: '16px',
-            padding: '1em',
-        }
-    }
+document.addEventListener('DOMContentLoaded', function () {
+    Highcharts.setOptions({
+        colors: ['lightskyblue', 'darksalmon'],
+        credits: {
+            enabled: false,
+        },
+        title: {
+            style: {
+                color: 'var(--text-color-light)',
+                fontWeight: 'bold',
+                fontSize: '16px',
+                padding: '1em',
+            },
+        },
+    });
 });
 
 function cumsum(values) {
@@ -23,13 +25,13 @@ function cumsum(values) {
 }
 
 async function drawHandChart(text, alternatings) {
-    let data = alternatings.map(d => d / (text.length - 1) * 100);
+    let data = alternatings.map((d) => (d / (text.length - 1)) * 100);
 
     handChart = Highcharts.chart('hand-chart', {
         plotOptions: {
             column: {
                 colorByPoint: true,
-            }
+            },
         },
         chart: {
             type: 'column',
@@ -51,6 +53,11 @@ async function drawHandChart(text, alternatings) {
         },
         xAxis: {
             categories: ['QWERTY', 'Dvorak'],
+            labels: {
+                style: {
+                    fontSize: '16px',
+                },
+            },
         },
         yAxis: {
             title: undefined,
@@ -62,6 +69,17 @@ async function drawHandChart(text, alternatings) {
             {
                 data: data,
                 showInLegend: false,
+                dataLabels: {
+                    enabled: true,
+                    // pointFormat: '{point.y:.0f}',
+                    pointFormat: `
+                    <span style="color: #fffa; font-size: 20px;">
+                    {point.y:.0f}%
+                    </span>`,
+                    useHTML: true,
+                    inside: true,
+                    align: 'center',
+                },
             },
         ],
     });
@@ -83,7 +101,7 @@ async function drawRowChart(rowUsages) {
             series: {
                 dataLabels: {
                     pointFormat: `
-                    <span style="color: #ffffff88; z-index: 0; font-size: 20px;">
+                    <span style="color: #fffa; z-index: 0; font-size: 20px;">
                     <small>{series.name}</small>
                     
                     {point.percentage:.0f}%
@@ -130,6 +148,11 @@ async function drawRowChart(rowUsages) {
         },
         xAxis: {
             categories: ['QWERTY', 'Dvorak'],
+            labels: {
+                style: {
+                    fontSize: '16px',
+                },
+            },
         },
         legend: {
             enabled: false,
@@ -286,6 +309,11 @@ function writeOutput(element, character) {
     }
 }
 async function renderPresses(keyboard, word, timesteps) {
+
+    let layoutName = keyboard.options.layoutName;
+    let layoutkeys = {...kbkeys[layoutName], ...kbkeys[layoutName + 'Shift']};
+    let layoutmatrix = kbmatrix[layoutName];
+
     let timescale = TIMESCALE;
     let resttime = RESTTIME;
 
@@ -310,23 +338,23 @@ async function renderPresses(keyboard, word, timesteps) {
         return;
     }
 
-    let prevChar;
     let currChar;
+    let currKey;
     written.innerHTML = '';
     for (let idx = 0; idx < word.length; idx++) {
         currChar = word[idx];
+        // Get key at the same index on the un-shifted layout
+        currKey = layoutkeys[currChar === ' ' ? '{space}' : currChar];
+        let keyChar = layoutmatrix[currKey.y][currKey.x];
 
         writeOutput(written, currChar);
 
         // Visually 'type' on the keyboard
-        pressButton(keyboard, currChar, resttime);
-        prevChar = currChar;
+        pressButton(keyboard, keyChar.character, resttime);
 
         await sleep(timesteps[idx] * timescale);
     }
     return;
 }
-
-
 
 // Make bar category labels larger

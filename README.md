@@ -364,6 +364,3 @@ Text Sample
     -   After typing a key, the finger should return back to the home positions
         after a letter or two passes without them being called.
     -   This can wait
--   **fix distance calculation**:
-    -   I noticed that repeatedly pressing a key that isn't in an initial position is still adding a distance when it shouldn't. e.x. `pppppp`
-    -   **(urgent)**

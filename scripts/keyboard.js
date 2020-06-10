@@ -2,12 +2,17 @@ let Keyboard = window.SimpleKeyboard.default;
 
 let layouts = {
     qwerty: [
-        //   "{escape} {f1} {f2} {f3} {f4} {f5} {f6} {f7} {f8} {f9} {f10} {f11} {f12}",
         '` 1 2 3 4 5 6 7 8 9 0 - = {backspace}',
         '{tab} q w e r t y u i o p [ ] \\',
         "{capslock} a s d f g h j k l ; ' {enter}",
         '{shiftleft} z x c v b n m , . / {shiftright}',
-        //   "{controlleft} {altleft} {metaleft} {space} {metaright} {altright}"
+        '{controlleft} {metaleft} {altleft} {space} {altright} {fn} {controlright}',
+    ],
+    qwertyShift: [
+        '~ ! @ # $ % ^ & * ( ) _ + {backspace}',
+        '{tab} Q W E R T Y U I O P { } |',
+        "{capslock} A S D F G H J K L : \" {enter}",
+        '{shiftleft} Z X C V B N M < > ? {shiftright}',
         '{controlleft} {metaleft} {altleft} {space} {altright} {fn} {controlright}',
     ],
     dvorak: [
@@ -17,16 +22,14 @@ let layouts = {
         '{shiftleft} ; q j k x b m w v z {shiftright}',
         '{controlleft} {metaleft} {altleft} {space} {altright} {fn} {controlright}',
     ],
-    // shift: [
-    //   "{escape} {f1} {f2} {f3} {f4} {f5} {f6} {f7} {f8} {f9} {f10} {f11} {f12}",
-    //   "~ ! @ # $ % ^ & * ( ) _ + {backspace}",
-    //   "{tab} Q W E R T Y U I O P { } |",
-    //   '{capslock} A S D F G H J K L : " {enter}',
-    //   "{shiftleft} Z X C V B N M < > ? {shiftright}",
-    //   "{controlleft} {altleft} {metaleft} {space} {metaright} {altright}"
-    // ]
+    dvorakShift: [
+        '~ ! @ # $ % ^ & * ( ) {  } {backspace}',
+        "{tab} \" < > P Y F G C R L ? + |",
+        '{capslock} A O E U I D H T N S _ {enter}',
+        '{shiftleft} : Q J K X B M W V Z {shiftright}',
+        '{controlleft} {metaleft} {altleft} {space} {altright} {fn} {controlright}',
+    ],
 }
-// '{backspace}': 'backspace ⌫',
 
 let display = {
     '{escape}': 'esc',
@@ -49,8 +52,8 @@ let buttonTheme = [
     {
         class: 'hg-disabled',
         buttons:
-            '` = {backspace} \
-                {tab} [ ] \\ \
+            '{backspace} \
+                {tab} \
                 {capslock} {enter} \
                 {shiftleft} {shiftright} \
                 {controlleft} {altleft} {metaleft} {controlright} {altright} {metaright} {fn}',
@@ -106,12 +109,10 @@ let fingerIdxs = [
     [0, 0, 1, 2, 3, 3, 6, 6, 7, 8, 9, 9, 9, 9],
     [0, 0, 1, 2, 3, 3, 6, 6, 7, 8, 9, 9, 9],
     [0, 0, 1, 2, 3, 3, 6, 6, 7, 8, 9, 9],
+    [-1, -1, -1, -1, -1, -1, -1, -1]
 ];
 let kbkeys = {};
 let kbmatrix = {};
-
-// The widths of the first key of each row
-let xoffsets = [1, 1.5, 1.75, 2.25];
 
 for (const layoutName in layouts) {
     let layout = layouts[layoutName];
@@ -119,16 +120,15 @@ for (const layoutName in layouts) {
     let layoutkeys = {};
     let layoutmatrix = [];
 
-    for (let rowIdx = 0; rowIdx < 4; rowIdx++) {
+    for (let rowIdx = 0; rowIdx < 5; rowIdx++) {
         let characters = layout[rowIdx].split(' ');
-        let xoffset = xoffsets[rowIdx];
 
         for (let colIdx = 0; colIdx < characters.length; colIdx++) {
             let character = characters[colIdx];
 
             layoutkeys[character] = {
                 character: character,
-                x: colIdx + xoffset,
+                x: colIdx,
                 y: rowIdx,
                 finger: fingerIdxs[rowIdx][colIdx],
             };

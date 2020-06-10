@@ -5,13 +5,14 @@ const YSCALE = 15 + 3.3;
 const ZDEPTH = 2; // The travel distance of a key.  Laptops and low-profile is
 // usually 2mm, external keyboards usually 3.5 - 4mm.
 // https://en.wikipedia.org/wiki/Keyboard_technology#Scissor-switch_keyboard
+// The widths of the first key of each row
+const XOFFSETS = [1, 1.5, 1.75, 2.25];
 const ROWPENALTYMULTIPLIERS = [1, 1, 1, 1.2];
 const FIXEDCOST = 18;
 // For use in rendering
 const TIMESCALE = 5.25; // Calibrated to roughly 70 WPM on QWERTY
 const RESTTIME = 50;
-// Would like to add eventual support for :\"<>?_
-const ALLOWEDCHARACTERS = "1234567890\\-qwertyuiopasdfghjkl;'zxcvbnm,./ ";
+const ALLOWEDCHARACTERS = `1234567890-=~!@#$%^&*()_+qwertyuiop{}\\[\\]asdfghjkl;':"zxcvbnm,\\.\\/<>? `;
 const DEBUG = false;
 const RENDER = true;
 
@@ -22,21 +23,23 @@ function parseWord(word) {
     let re = new RegExp(`[^${ALLOWEDCHARACTERS}]`, 'g');
 
     cleaned = word
-        .toLowerCase()
+        // .toLowerCase()
         .replace(/[\u2018\u2019]/g, "'")
+        .replace(/[\u201c\u201d]/g, '"')
         .replace(re, '');
 
     return cleaned;
 }
 function distance(a, b) {
-    return Math.sqrt(((a.x - b.x) * XSCALE) ** 2 + ((a.y - b.y) * YSCALE) ** 2);
+    let [ax, bx] = [a.x + XOFFSETS[a.y], b.x + XOFFSETS[b.y]];
+    return Math.sqrt(((ax - bx) * XSCALE) ** 2 + ((a.y - b.y) * YSCALE) ** 2);
 }
 
 function run(keyboard, text, verbose = false) {
     text = parseWord(text);
 
     let layoutName = keyboard.options.layoutName;
-    let layoutkeys = kbkeys[layoutName];
+    let layoutkeys = {...kbkeys[layoutName], ...kbkeys[layoutName + 'Shift']};
     let layoutmatrix = kbmatrix[layoutName];
 
     // Each 'run' starts with the home finger positions.
@@ -78,7 +81,10 @@ function run(keyboard, text, verbose = false) {
             }
             prevChar = character;
 
+            // What key was the finger previously on?
             let prevKey = kbfingers[kbkey.finger];
+            // Now we can update the key the finger *is* on.
+            kbfingers[kbkey.finger] = kbkey;
 
 
             dist += distance(kbkey, prevKey);

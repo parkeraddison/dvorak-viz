@@ -24,6 +24,9 @@ function writeScore(timeElem, distElem, text, output) {
     }
 }
 
+
+let totalUserTimeSavings = 0;
+let timeSavingsUser = document.getElementById('time-savings-user');
 async function typerace(text) {
     document.getElementById('typerace').scrollIntoView({
         behavior: 'smooth',
@@ -32,6 +35,8 @@ async function typerace(text) {
 
     let qwOutput = run(qwKeyboard, text, DEBUG);
     let dvOutput = run(dvKeyboard, text, DEBUG);
+
+    totalUserTimeSavings += ((qwOutput.cost - dvOutput.cost) * TIMESCALE / 1000)
 
     console.log(qwOutput);
     console.log(dvOutput);
@@ -76,6 +81,8 @@ async function typerace(text) {
     drawRowChart([qwOutput.rowUsage, dvOutput.rowUsage]);
 
     drawHandChart(text, [qwOutput.alternating, dvOutput.alternating]);
+
+    timeSavingsUser.innerHTML = Math.round(totalUserTimeSavings) + 's'
 }
 
 const passage = document.getElementById('passage-written');
