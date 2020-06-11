@@ -1,6 +1,6 @@
 # Dvorak Viz
 
-A visual exploration of the efficiency difference between common and obscure keyboard layouts.
+A visual exploration of the differences in efficiency between the QWERTY and Dvorak keyboard layouts.
 
 ## Website
 
@@ -12,7 +12,7 @@ This project is meant to be viewed (and interacted with!) primarily at its webpa
 
 The efficiency comparison is most useful for normal sentences, and the visualization is most effective for text that is up to a few sentences in length.
 
-Here are a few examples that you can use (or to give you inspiration):
+Here are a few examples that you can type in (or use for inspiration):
 
 > You know what, yesterday I was just minding my own business, walking down the street, when an incredible humming bird whizzed past my shoulder. Viridian wings a blur, with an unbelievably vibrant blue underbelly -- it made me appreciate the moment.
 
@@ -323,9 +323,22 @@ The row modifier is 1 for all rows besides the bottom row, which has a modifier 
 
 ### How was travel distance computed?
 
-All fingers are assumed to rest on the home row, and each letter is assumed to have one finger responsible for it.
+Travel distance is quite literally computed as the distance it would take for each of your fingers to arrive at and press each character.  All fingers are assumed to rest on the home row, and each letter is assumed to have one finger responsible for it.  See [Standard finger placement on a QWERTY keyboard](https://en.wikipedia.org/wiki/Touch_typing#/media/File:FingerHandPosUSA.gif).
 
-When a letter is typed, its corresponding finger needs to move from its previous position to the current key. A simple distance calculation is done here, using the dimensions of keyboard with keys 15mm tall and 15.5mm wide, with 3.3mm gaps between each key, as well as a tab key that is 1.5x wide, a capslock that is 1.75x wide, and a left shift key that is 2.25x wide (all standard measurements). The keys are also assumed to have a travel depth of 2mm (standard for most laptops).
+When a letter is typed, the finger responsible for it moves from its previous position to the current position, then press down on the key.
+
+Each letter key of the keyboard is assumed to be 15.5mm wide, 15mm tall, and have 3.3mm spacing between each key. Each row has a physical offset determined by the width of the tab key, capslock, and left shift, which are assumed to have widths of 1.5x, 1.75x, and 2.25x respectively. See [Standard or Full-size Keyboard](https://hobgear.com/understand-keyboard-sizes/) and [Keycap Size Chart](https://support.wasdkeyboards.com/hc/en-us/articles/115009701328-Keycap-Size-Compatibility).
+
+The keys are assumed to have a travel depth of 2mm, which is common for most laptops. See [Scissor-switch keyboard](https://en.wikipedia.org/wiki/Keyboard_technology#Scissor-switch_keyboard).
+
+The final distance calculation for a single finger traveling from its previous resting position to a new key and pressing the new key uses the Euclidean distance formula and adds the additional travel depth.
+
+```
+Key.x = offset + (15.5 + 3.3) * column index
+Key.y = (15 + 3.3) * row index
+
+Distance = sqrt( (Key1.x - Key2.x)^2 + (Key1.y - Key2.y)^2 ) + 2
+```
 
 ## Sources
 
@@ -344,6 +357,7 @@ Keycap Dimensions
 
 -   https://support.wasdkeyboards.com/hc/en-us/articles/115009701328-Keycap-Size-Compatibility
 -   https://hobgear.com/understand-keyboard-sizes/
+-   https://en.wikipedia.org/wiki/Keyboard_technology#Scissor-switch_keyboard
 
 Proportion of Dvorak Users
 
@@ -360,8 +374,8 @@ Text Sample
 
 ### TODO
 
--   draw finger movement paths on the keyboards, and/or heatmaps
--   modify distance calculation:
+-   Support heatmaps for text that's too long to play the typing animation
+-   Modify distance calculation
     -   After typing a key, the finger should return back to the home positions
-        after a letter or two passes without them being called.
-    -   This can wait
+        after a letter or two passes without being pressed
+    -   Worried about how to factor this in to the distance chart...
